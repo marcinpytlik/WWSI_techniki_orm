@@ -181,3 +181,45 @@ Model obiektowy opisuje relacje nawigacyjne; SQL Server wymusza integralność o
 NOTATKI PROWADZĄCEGO — slajd 13
 Zapowiedz LINQ i generowane JOIN.
 -->
+
+---
+
+# ERD: zamówienia
+
+```text
+Customers 1 ── N Orders
+Orders    1 ── N OrderLines
+Products  1 ── N OrderLines
+```
+
+OrderLines łączy Orders i Products.
+
+<!-- NOTATKI v2: Rozważ PK (OrderId, ProductId) albo oddzielny OrderLineId. -->
+
+---
+
+# Usuwanie w modelu relacyjnym
+
+Usunięcie klienta z historią zamówień: Cascade, Restrict czy NoAction?
+
+**Reguła usuwania to decyzja biznesowa.**
+
+<!-- NOTATKI v2: Zachowanie historii sprzedaży może wykluczyć cascade. -->
+
+---
+
+# Indeksy przy relacjach
+
+FK nie jest automatycznie indeksem w SQL Server.
+
+Projektuj indeksy zgodnie z JOIN i filtrami.
+
+<!-- NOTATKI v2: Weryfikuj plan, nie dodawaj indeksu do każdej kolumny bez analizy. -->
+
+---
+
+# Decyzja ORM Shop
+
+Które rozwiązanie wybierasz? Nazwij **ryzyko**, sposób pomiaru i wpływ na SQL Server.
+
+<!-- NOTATKI: ćwiczenie do dyskusji; pominąć gdy kończy się czas. -->
