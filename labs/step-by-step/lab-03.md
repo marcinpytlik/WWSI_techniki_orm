@@ -1,7 +1,7 @@
 # Lab 03 — instrukcja wykonania krok po kroku
 
 
-> Środowisko: PowerShell 7/5.1, .NET 10, SQL Server 2022 CU26 na localhost,14333. Polecenia wykonuj z katalogu repozytorium, chyba że wskazano inaczej. **Nigdy nie uruchamiaj migracji na koncie aplikacji.**
+> Środowisko: PowerShell 7/5.1, .NET 10, SQL Server 2022 CU26 na 127.0.0.1,14333. Polecenia wykonuj z katalogu repozytorium, chyba że wskazano inaczej. **Nigdy nie uruchamiaj migracji na koncie aplikacji.**
 
 **Temat:** Relacje, klucze obce i spójność
 
@@ -14,7 +14,7 @@ W diagramie zaznacz: Customer 1:N Order; Order 1:N OrderLine; Product 1:N OrderL
 
 ## Krok 2. Znajdź mapowanie
 
-W `src/OrmShop.Api/Data/ShopDbContext.cs` wskaż `HasOne/WithMany/HasForeignKey`, `OnDelete(DeleteBehavior.NoAction)` dla Customer i Product oraz `Cascade` dla OrderLine po Order. Wyjaśnij, dlaczego historii nie kasujemy automatycznie razem z Customer.
+W `src/OrmShop.Api/Data/ShopDbContext.cs` znajdź `ApplyConfigurationsFromAssembly()`, a następnie w `src/OrmShop.Api/Data/Configurations/OrderConfiguration.cs` i `OrderLineConfiguration.cs` wskaż `HasOne/WithMany/HasForeignKey`, `OnDelete(DeleteBehavior.NoAction)` dla Customer i Product oraz `Cascade` dla OrderLine po Order. Wyjaśnij, dlaczego historii nie kasujemy automatycznie razem z Customer.
 
 ## Krok 3. Weryfikacja FK w SQL
 
