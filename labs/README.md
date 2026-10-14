@@ -19,3 +19,7 @@ Każdy moduł będzie zawierał:
 8. Podsumowanie i prezentacja projektów
 
 Materiały robocze: szczegółowe instrukcje będą w osobnych plikach `lab-01.md` itd.
+
+## Przed Lab 01
+
+Zainstaluj narzędzia i wykonaj testy według [instrukcji przygotowania środowiska](../docs/przygotowanie-srodowiska.md).
