@@ -27,3 +27,8 @@ Przydział przedmiotu: 18 h wykładów i 27 h laboratoriów. W znanym planie sie
 - Każde niebanalne zapytanie LINQ omawiamy w kontekście wygenerowanego SQL.
 - Przykłady w plikach są fragmentami dydaktycznymi, a nie kompletnymi samodzielnie kompilowalnymi aplikacjami.
 - Laboratoria opracujemy po zaakceptowaniu zakresu wykładów.
+
+## Prezentacje
+
+- [Wykład 01 — Skąd wziął się ORM? (17 slajdów Marp)](slides/01-historia-orm.marp.md)
+- [Jak wyświetlić i wyeksportować prezentację](slides/README.md)
