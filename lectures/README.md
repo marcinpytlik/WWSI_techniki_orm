@@ -32,3 +32,7 @@ Przydział przedmiotu: 18 h wykładów i 27 h laboratoriów. W znanym planie sie
 
 - [Wykład 01 — Skąd wziął się ORM? (17 slajdów Marp)](slides/01-historia-orm.marp.md)
 - [Jak wyświetlić i wyeksportować prezentację](slides/README.md)
+
+## Komplet slajdów wykładowych
+
+Wszystkie prezentacje wykładów 01–08 znajdują się w [katalogu slides](slides/README.md). Łącznie 108 slajdów, w tym notatki prowadzącego. Wersja robocza do przeglądu merytorycznego.
