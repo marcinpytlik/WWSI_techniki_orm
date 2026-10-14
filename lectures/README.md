@@ -15,18 +15,18 @@ Materiały prowadzącego na 8 niedzielnych spotkań. Technologia bazowa: **C#, E
 
 ## Status przygotowania
 
-Opracowano szkice wykładów obejmujące tok, cele, zagadnienia i przykłady do omówienia. **Nie są to jeszcze finalne prezentacje ani pełne scenariusze minuta po minucie.**
+Scenariusze wykładów 01–08 i prezentacje Marp są materiałem do prowadzenia. Laboratoria są w `labs/`, kompilowalny model ORM Shop jest w `src/OrmShop.Api`. Przykłady w scenariuszach pozostają fragmentami do omówienia.
 
 ### Uwaga dotycząca godzin
 
-Przydział przedmiotu: 18 h wykładów i 27 h laboratoriów. W znanym planie siedem spotkań ma 45 minut wykładu, ósme 100 minut. To 415 minut zegarowych, czyli około 9,22 godziny dydaktycznej po 45 minut. Nie jest to zgodne z przydziałem 18 godzin wykładów — rozbieżność wymaga formalnego wyjaśnienia; nie deklarujemy, że osiem znanych slotów pokrywa 18 h.
+Przydział przedmiotu to 18 h wykładów i 27 h laboratoriów. Znane sloty dają 415 minut wykładu, czyli 9,22 godziny dydaktycznej, oraz 1305 minut laboratorium, czyli 29 godzin dydaktycznych. Pełne rozliczenie jest w [README repozytorium](../README.md). Osiem znanych slotów nie pokrywa 18 godzin wykładu.
 
 ## Zasady prowadzenia
 
 - Teoria powinna pokazywać zarówno stronę obiektową, jak i konsekwencje relacyjne.
 - Każde niebanalne zapytanie LINQ omawiamy w kontekście wygenerowanego SQL.
-- Przykłady w plikach są fragmentami dydaktycznymi, a nie kompletnymi samodzielnie kompilowalnymi aplikacjami.
-- Laboratoria opracujemy po zaakceptowaniu zakresu wykładów.
+- Przykłady w plikach są fragmentami dydaktycznymi. Działający model jest w starterze API.
+- Przykład z wykładu ma używać pól, które są w `Models.cs`. Suma pozycji zamówienia jest liczona z `OrderLine`, a nie ze składowanej kwoty.
 
 ## Prezentacje
 
@@ -35,7 +35,7 @@ Przydział przedmiotu: 18 h wykładów i 27 h laboratoriów. W znanym planie sie
 
 ## Komplet slajdów wykładowych
 
-Wszystkie prezentacje wykładów 01–08 znajdują się w [katalogu slides](slides/README.md). Łącznie 108 slajdów, w tym notatki prowadzącego. Wersja robocza do przeglądu merytorycznego.
+Wszystkie prezentacje wykładów 01–08 znajdują się w [katalogu slides](slides/README.md). Łącznie 108 slajdów, w tym notatki prowadzącego. Przykłady na slajdach trzymaj zgodne z `src/OrmShop.Api`.
 
 ## Wersja 2.0 — rozszerzenie dydaktyczne
 

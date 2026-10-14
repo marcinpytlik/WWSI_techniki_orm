@@ -12,11 +12,12 @@ FROM sys.database_permissions
 WHERE grantee_principal_id IN
  (USER_ID(N'role_shop_runtime'),USER_ID(N'role_shop_deploy'));
 GO
--- Instructor performs the following logins as separate SSMS connections:
+-- Instructor performs the following logins as separate SSMS connections.
 -- orm_shop_app: SELECT/INSERT/UPDATE/DELETE permitted on shop objects.
 -- orm_shop_app: CREATE TABLE / ALTER denied. Test using:
--- CREATE TABLE shop.ShouldFail (Id int); -- expected 262 or similar
--- orm_shop_deploy: migrations permitted within shop.
+--   CREATE TABLE shop.ShouldFail (Id int); -- expected 262
+-- orm_shop_deploy: CREATE inside shop is allowed after review, but dbo is not.
+--   CREATE TABLE dbo.ShouldFail (Id int); -- must fail (no ALTER on schema dbo)
 -- Neither account may be a member of db_owner, db_ddladmin, sysadmin.
 SELECT r.name AS Role, m.name AS Member
 FROM sys.database_role_members AS rm

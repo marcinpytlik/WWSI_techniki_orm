@@ -6,7 +6,7 @@
 **Temat:** LINQ i generowany SQL
 
 ## Cel
-Po wykonaniu student potrafi odtworzyć czynności i wskazać dowody działania oraz granice uprawnień.
+Student porównuje zapytanie LINQ z T-SQL widocznym w logu Development i w wyniku ToQueryString.
 
 ## Krok 1. Przygotuj bazę
 
@@ -17,7 +17,7 @@ Wprowadź kilka klientów i zamówień korzystając z runtime DML. Nie twórz da
 ~~~powershell
 dotnet run --project src/OrmShop.Api/OrmShop.Api.csproj
 ~~~
-Sprawdź w przeglądarce adres wypisany przez Kestrel i wywołaj `/customers`, `/products`. Endpointy korzystają z projekcji i `AsNoTracking`.
+Aplikacja słucha na http://localhost:5080. Wywołaj `/customers` i `/products`. Endpointy korzystają z projekcji i `AsNoTracking`. W Development konsola wypisuje tekst SQL (`LogLevel.Information` dla `Microsoft.EntityFrameworkCore.Database.Command`). `/products` zwraca także `RowVersion` jako Base64 — ten token przyda się w Lab 05.
 
 ## Krok 3. Dodaj filtrowanie miasta
 
@@ -36,7 +36,7 @@ Sprawdź `/customers?city=Warszawa`.
 
 ## Krok 4. Zaobserwuj SQL
 
-Zapisz kod zapytania do zmiennej `q` i wywołaj `q.ToQueryString()` **przed ToListAsync** (np. krótkotrwale loguj tekst zapytania w środowisku developerskim). Nie loguj wrażliwych wartości parametrów na produkcji.
+Zapisz końcowe zapytanie, już po `Where`, `OrderBy` i `Select`, i wywołaj na nim `ToQueryString()` przed `ToListAsync`. Log konsoli pokazuje to samo polecenie przy wykonaniu. Nie włączaj `EnableSensitiveDataLogging`: parametry mają zostać placeholderami.
 
 ## Krok 5. Porównaj Include i projekcję
 
@@ -66,6 +66,4 @@ Oddaj 3 fragmenty LINQ, ich T-SQL, komentarz o liczbie zapytań i planach.
 - [ ] Skrypt migracji przejrzany i uruchomiony oddzielnie.
 - [ ] Wyniki i błędy zostały zapisane bez ujawnienia haseł.
 
-**Powiązane źródła:** [architektura bezpieczeństwa](architecture-and-security.md), [projekt C#](../src/README.md), [wspólny model](../lectures/orm-shop-case-study.md).
-
-> Status: instrukcja prowadząca przez etap. W laboratoriach 05–07 część implementacji jest zadaniem studenta; test uruchomieniowy całego kursu nie został jeszcze wykonany na żywym kontenerze.
+**Powiązane źródła:** [architektura bezpieczeństwa](../architecture-and-security.md), [projekt C#](../../src/README.md), [wspólny model](../../lectures/orm-shop-case-study.md).

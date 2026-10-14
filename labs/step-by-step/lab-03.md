@@ -6,7 +6,7 @@
 **Temat:** Relacje, klucze obce i spójność
 
 ## Cel
-Po wykonaniu student potrafi odtworzyć czynności i wskazać dowody działania oraz granice uprawnień.
+Student sprawdza klucze obce i reguły usuwania oraz odróżnia indeks założony przez konwencję EF od indeksu, który naprawdę trzeba dodać.
 
 ## Krok 1. Narysuj model
 
@@ -45,7 +45,7 @@ Utwórz Order i OrderLine używając rzeczywistych identyfikatorów, a potem wyk
 
 ## Krok 6. Praca samodzielna
 
-Oceń indeksy po FK z `sys.indexes`. Uzasadnij jeden dodatkowy indeks pod przyszły filtr `Orders.CustomerId`. Właściwy indeks zaprojektuj w nowej migracji, wygeneruj skrypt, przejrzyj i wdrażaj oddzielnym kontem.
+Odczytaj indeksy z `sys.indexes` dla tabel `shop`. Konwencja EF Core zakłada indeks na kluczu obcym, więc `Orders.CustomerId` najpewniej już go ma. Nie dodawaj drugiego indeksu na tę samą kolumnę. Jeśli filtr z Lab 04 (`Customers.City`) nie ma indeksu, zaprojektuj właśnie ten: nowa migracja, skrypt do przeglądu, wdrożenie kontem deploy.
 
 ## Oddanie etapu
 
@@ -67,6 +67,4 @@ Dostarcz diagram, wynik inspekcji FK, ślad testu negatywnego i ewentualną migr
 - [ ] Skrypt migracji przejrzany i uruchomiony oddzielnie.
 - [ ] Wyniki i błędy zostały zapisane bez ujawnienia haseł.
 
-**Powiązane źródła:** [architektura bezpieczeństwa](architecture-and-security.md), [projekt C#](../src/README.md), [wspólny model](../lectures/orm-shop-case-study.md).
-
-> Status: instrukcja prowadząca przez etap. W laboratoriach 05–07 część implementacji jest zadaniem studenta; test uruchomieniowy całego kursu nie został jeszcze wykonany na żywym kontenerze.
+**Powiązane źródła:** [architektura bezpieczeństwa](../architecture-and-security.md), [projekt C#](../../src/README.md), [wspólny model](../../lectures/orm-shop-case-study.md).

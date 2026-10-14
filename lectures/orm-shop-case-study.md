@@ -14,8 +14,7 @@ erDiagram
     string City }
   ORDER { int Id PK
     int CustomerId FK
-    datetime CreatedAt
-    decimal TotalAmount }
+    datetimeoffset CreatedAt }
   ORDER_LINE { int OrderId PK,FK
     int ProductId PK,FK
     int Quantity

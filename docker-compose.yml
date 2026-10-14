@@ -7,15 +7,20 @@ services:
       ACCEPT_EULA: "Y"
       MSSQL_PID: "Developer"
       MSSQL_SA_PASSWORD: "${MSSQL_SA_PASSWORD:?Ustaw MSSQL_SA_PASSWORD w pliku .env}"
+      MSSQL_MEMORY_LIMIT_MB: "2048"
     ports:
       - "127.0.0.1:14333:1433"
     volumes:
       - orm_sql_data:/var/opt/mssql
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "bash -c 'echo > /dev/tcp/127.0.0.1/1433'"]
+      test:
+        [
+          "CMD-SHELL",
+          "SQLCMD=/opt/mssql-tools18/bin/sqlcmd; [ -x \"$$SQLCMD\" ] || SQLCMD=/opt/mssql-tools/bin/sqlcmd; \"$$SQLCMD\" -S localhost -U sa -P \"$$MSSQL_SA_PASSWORD\" -C -b -Q \"SELECT 1\" || exit 1"
+        ]
       interval: 10s
-      timeout: 5s
+      timeout: 10s
       retries: 30
       start_period: 45s
 

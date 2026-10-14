@@ -6,15 +6,15 @@
 **Temat:** Pierwsza migracja wykonywana kontem deploy
 
 ## Cel
-Po wykonaniu student potrafi odtworzyć czynności i wskazać dowody działania oraz granice uprawnień.
+Student generuje migrację czterech encji, przegląda idempotentny skrypt i wykonuje go wyłącznie jako orm_shop_deploy.
 
 ## Krok 1. Sprawdź model
 
-Otwórz `src/OrmShop.Api/Models.cs` i `ShopDbContext.cs`. Wskaż klucze główne, `RowVersion`, schemat `shop`, indeks `Sku`. W starterze model zawiera już także Order i OrderLine — pierwsza migracja utworzy wszystkie cztery tabele.
+Otwórz `src/OrmShop.Api/Models.cs` i `ShopDbContext.cs`. Wskaż klucze główne, `RowVersion` inicjalizowany jako `null`, `CreatedAt` typu `DateTimeOffset`, schemat `shop` i indeks `Sku`. W starterze model zawiera już także Order i OrderLine — pierwsza migracja utworzy wszystkie cztery tabele. Nie dopisuj tych klas drugi raz.
 
 ## Krok 2. Sprawdź konfigurację historii migracji
 
-W `Program.cs` odnajdź `MigrationsHistoryTable("__EFMigrationsHistory", "shop")`. Dzięki temu historia znajdzie się w tym samym schemacie co encje. Skontroluj, czy **nie** ma `Database.Migrate()` ani `EnsureCreated()`.
+W `Program.cs` odnajdź `MigrationsHistoryTable("__EFMigrationsHistory", "shop")`. Dzięki temu historia znajdzie się w tym samym schemacie co encje. Skontroluj, czy **nie** ma `Database.Migrate()` ani `EnsureCreated()`. `ShopDbContextFactory` pozwala wygenerować migrację bez żywej bazy. Placeholder w fabryce nie jest hasłem runtime i nie jest czytany przez `Program.cs`.
 
 ## Krok 3. Wygeneruj migrację
 
@@ -65,6 +65,4 @@ Wymagane: zrzut schema, historia migracji, bezpieczny skrypt i dowód rozdzielen
 - [ ] Skrypt migracji przejrzany i uruchomiony oddzielnie.
 - [ ] Wyniki i błędy zostały zapisane bez ujawnienia haseł.
 
-**Powiązane źródła:** [architektura bezpieczeństwa](architecture-and-security.md), [projekt C#](../src/README.md), [wspólny model](../lectures/orm-shop-case-study.md).
-
-> Status: instrukcja prowadząca przez etap. W laboratoriach 05–07 część implementacji jest zadaniem studenta; test uruchomieniowy całego kursu nie został jeszcze wykonany na żywym kontenerze.
+**Powiązane źródła:** [architektura bezpieczeństwa](../architecture-and-security.md), [projekt C#](../../src/README.md), [wspólny model](../../lectures/orm-shop-case-study.md).

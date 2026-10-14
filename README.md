@@ -25,7 +25,18 @@ Zadeklarowany wymiar: **18 godzin dydaktycznych wykładu i 27 godzin dydaktyczny
 | 7 | 24.01.2027 | 10:35–11:20 | 11:30–14:30 |
 | 8 | termin do ustalenia | 10:35–12:15 | 12:50–13:35 |
 
-> **Uwaga organizacyjna:** przedziały zegarowe nie sumują się wprost do zadeklarowanych 18 h wykładu i 27 h laboratorium. Rozliczenie godzin i ostateczną kolejność zajęć należy potwierdzić z planem uczelni.
+Godzina dydaktyczna w tym rozliczeniu ma 45 minut.
+
+| Część | Zegar | Godziny dydaktyczne |
+|---|---|---|
+| Wykłady 1–7 | 7 × 45 min = 315 min | 7 |
+| Wykład 8 | 100 min | 2,22 |
+| **Wykłady razem** | **415 min** | **9,22 przy deklarowanych 18** |
+| Laboratoria 1–7 | 7 × 180 min = 1260 min | 28 |
+| Laboratorium 8 | 45 min | 1 |
+| **Laboratoria razem** | **1305 min** | **29 przy deklarowanych 27** |
+
+Znane sloty nie pokrywają 18 godzin wykładu: brakuje 405 minut, czyli 9 godzin dydaktycznych. Laboratoria tych slotów są o 90 minut, czyli 2 godziny dydaktyczne, dłuższe niż 27. Data zjazdu 8 zostaje pusta, dopóki dziekanat nie potwierdzi terminu i tego, czy brakujące wykłady są w innym okienku, czy wymiar w karcie przedmiotu jest inny.
 
 ## Plan merytoryczny (propozycja)
 
@@ -50,7 +61,7 @@ Zadeklarowany wymiar: **18 godzin dydaktycznych wykładu i 27 godzin dydaktyczny
 
 ## Status
 
-Repozytorium w fazie przygotowania. Harmonogram merytoryczny ma charakter roboczy; szczegółowe instrukcje laboratoryjne będą rozwijane osobno.
+Wykłady, laboratoria i starter API są przygotowane na pierwszy zjazd. Polecenia laboratorium są w `labs/step-by-step/`. Plik `labs/lab-0N-….md` tego samego numeru opisuje cel i odbiór, bez drugiej listy komend. Build sprawdza workflow `.github/workflows/build.yml`.
 
 ## Przygotowanie przed pierwszym zjazdem
 

@@ -1,63 +1,34 @@
 # Lab 01 — Środowisko, bootstrap i granice uprawnień
 
 **Zjazd:** 25.10.2026  
-**Zakres:** Sprawdzenie .NET, EF CLI, Docker i SQL Server; utworzenie OrmShop i kont separowanych.  
-**Środowisko:** .NET 10, EF Core 10, SQL Server 2022 CU26, port 14333.  
-**Czas:** 11:30–14:30 (180 min; planuj przerwy i czas samodzielny).
+**Czas:** 11:30–14:30 (180 min)  
+**Procedura:** [instrukcja krok po kroku](step-by-step/lab-01.md). Polecenia są tylko tam.
 
-## Cel i warunki wstępne
+## Cel
 
-Wykonaj kolejno wcześniejsze laboratoria. Punktem odniesienia jest [model ORM Shop](../lectures/orm-shop-case-study.md). **Nie wykorzystuj `sa` ani uprawnień DDL w aplikacji.** Zapoznaj się z [modelem bezpieczeństwa](architecture-and-security.md).
+Student uruchamia SQL Server 2022 CU26, rozdziela konta `sa`, `orm_shop_deploy` i `orm_shop_app` oraz startuje gotowy starter API na http://localhost:5080.
 
-## Wykonanie krok po kroku
+## Co już jest w repozytorium
 
-### Krok 1
+Starter `src/OrmShop.Api` jest częścią materiałów. Na tym zjeździe nie tworzysz nowego projektu Web API.
 
-Pracuj w głównym katalogu repozytorium. Skopiuj .env.example do .env, zmień hasło sa, uruchom docker compose up -d i sprawdź docker compose ps.
+## Rezultat
 
-**Sprawdzenie:** zapisz rezultat (fragment konsoli, wynik T-SQL lub test automatyczny). Zanotuj konto, którym wykonano operację.
-
-### Krok 2
-
-W SSMS jako administrator wykonaj security/01-bootstrap.sql; potwierdź SELECT DB_NAME() i poziom zgodności 160.
-
-**Sprawdzenie:** zapisz rezultat (fragment konsoli, wynik T-SQL lub test automatyczny). Zanotuj konto, którym wykonano operację.
-
-### Krok 3
-
-Uruchom security/02-create-logins.sql w SQLCMD Mode, zmieniając przykładowe hasła na różne silne wartości (tylko środowisko izolowane).
-
-**Sprawdzenie:** zapisz rezultat (fragment konsoli, wynik T-SQL lub test automatyczny). Zanotuj konto, którym wykonano operację.
-
-### Krok 4
-
-Wykonaj security/03-verify-permissions.sql, zaloguj się oddzielnie jako app/deploy, wypróbuj operacje dozwolone i zablokowane.
-
-**Sprawdzenie:** zapisz rezultat (fragment konsoli, wynik T-SQL lub test automatyczny). Zanotuj konto, którym wykonano operację.
-
-### Krok 5
-
-Utwórz rozwiązanie ORM Shop i ASP.NET Core Web API, skonfiguruj user-secrets i połączenie konta runtime; NIE wywołuj Database.Migrate na starcie.
-
-**Sprawdzenie:** zapisz rezultat (fragment konsoli, wynik T-SQL lub test automatyczny). Zanotuj konto, którym wykonano operację.
-
-## Rezultat wymagany
-
-Poprawny SQL Server CU26; dwa konta z odrębnymi rolami; odmowa CREATE TABLE dla app; uruchamiający się szkielet API.
+- Build `16.0.4265.3`, CU26, kontener healthy po `SELECT 1`.
+- Konto aplikacji nie tworzy tabel. Konto deploy nie tworzy tabeli w schemacie `dbo`.
+- `GET http://localhost:5080/health` zwraca status running.
+- W repozytorium nie ma haseł ani `Database.Migrate()`.
 
 ## Pytanie kontrolne
 
-Dlaczego klucz migracyjny nie powinien znajdować się w konfiguracji API?
+Dlaczego login migracyjny nie powinien trafić do konfiguracji API?
 
 ## Zadanie samodzielne
 
-Udokumentuj w README projektu decyzję z tego zjazdu, wskaż wykonywany przez aplikację SQL (lub ograniczenie bazy) i opisz jedną możliwą awarię oraz sposób weryfikacji.
+Zapisz numer builda, wynik `HAS_PERMS_BY_NAME` dla aplikacji i kod błędu odmowy `CREATE TABLE dbo.ShouldFail` dla konta deploy. W notatce nie umieszczaj haseł.
 
-## Kryteria zaliczenia etapu
+## Kryteria zaliczenia
 
-- Działa funkcja z tego laboratorium i weryfikacja jest powtarzalna.
-- Konto runtime ma tylko DML do schematu shop, konto migracyjne używane jest oddzielnie.
-- Nie ma połączeń z `sa`, tajnych haseł ani `Database.Migrate()` w kodzie aplikacji.
-- Wytworzono kod, testy i krótki dowód wykonania (SQL/response/log).
-
-> **Uwaga:** to instrukcja dydaktyczna z krokami i kryteriami odbioru. Kody klas, gotowa solucja, endpointy i automatyzacja wdrożenia stanowią osobny pakiet implementacyjny; obecny plik nie udaje przetestowanego projektu end-to-end.
+- Skrypt `02-create-logins.sql` można uruchomić drugi raz bez błędu członkostwa w roli.
+- API startuje w środowisku Development i czyta user-secrets.
+- Odmowa DDL jest pokazana dla konta aplikacji i dla schematu `dbo` na koncie deploy.

@@ -1,57 +1,28 @@
 # Lab 08 — Finał ORM Shop — demonstracja i odbiór
 
-**Zjazd:** termin do ustalenia  
-**Zakres:** Końcowy odbiór i argumentacja decyzji architektonicznych; bez rozbudowy aplikacji.  
-**Środowisko:** .NET 10, EF Core 10, SQL Server 2022 CU26, port 14333.  
-**Czas:** 45 minut finału; repo i aplikacja gotowe przed zajęciami.
+**Zjazd:** termin do ustalenia z dziekanatem  
+**Czas:** 12:50–13:35 (45 min). Aplikacja jest gotowa przed zajęciami.  
+**Procedura:** [instrukcja krok po kroku](step-by-step/lab-08.md). Polecenia są tylko tam.  
+**Wymaga:** ukończonego Lab 07 i oddania repozytorium dzień wcześniej.
 
-## Cel i warunki wstępne
+## Cel
 
-Wykonaj kolejno wcześniejsze laboratoria. Punktem odniesienia jest [model ORM Shop](../lectures/orm-shop-case-study.md). **Nie wykorzystuj `sa` ani uprawnień DDL w aplikacji.** Zapoznaj się z [modelem bezpieczeństwa](architecture-and-security.md).
+Student broni projektu zbudowanego na poprzednich zjazdach. Ten zjazd nie dodaje funkcji.
 
-## Wykonanie krok po kroku
+## Przebieg 45 minut
 
-### Krok 1
+Każdy pokaz trwa do 6 minut: start API na http://localhost:5080, jeden LINQ razem z SQL, konflikt 409, odmowa DDL. Siedem pokazów wypełnia slot. Przy liczniejszej grupie na żywo wchodzą wybrane projekty, pozostałe są oceniane z repozytorium.
 
-Przed spotkaniem oddaj repo, instrukcję uruchomienia, migracje i wyniki testów.
+## Rezultat
 
-**Sprawdzenie:** zapisz rezultat (fragment konsoli, wynik T-SQL lub test automatyczny). Zanotuj konto, którym wykonano operację.
-
-### Krok 2
-
-Na zajęciach pokaż start API, zapytania LINQ i raport Dapper, poprawną odmowę DDL dla app oraz osobne wykonanie migracji.
-
-**Sprawdzenie:** zapisz rezultat (fragment konsoli, wynik T-SQL lub test automatyczny). Zanotuj konto, którym wykonano operację.
-
-### Krok 3
-
-Zademonstruj przypadek współbieżności i jedno porównanie wydajności z Lab 07.
-
-**Sprawdzenie:** zapisz rezultat (fragment konsoli, wynik T-SQL lub test automatyczny). Zanotuj konto, którym wykonano operację.
-
-### Krok 4
-
-Przedstaw dwa wybrane kompromisy architektoniczne i odpowiedz na pytania.
-
-**Sprawdzenie:** zapisz rezultat (fragment konsoli, wynik T-SQL lub test automatyczny). Zanotuj konto, którym wykonano operację.
-
-## Rezultat wymagany
-
-Kompletna aplikacja, raport techniczny i weryfikowalny zapis tego, co student wykonał.
+Kompletna aplikacja, raport techniczny i zapis tego, co student uruchomił. Punktacja jest w [projekcie zaliczeniowym](../project/README.md).
 
 ## Pytanie kontrolne
 
-Jak zmniejszyłbyś uprawnienia jeszcze bardziej w produkcji?
+Jak zmniejszyłbyś uprawnienia jeszcze bardziej poza laboratorium?
 
-## Zadanie samodzielne
+## Kryteria zaliczenia
 
-Udokumentuj w README projektu decyzję z tego zjazdu, wskaż wykonywany przez aplikację SQL (lub ograniczenie bazy) i opisz jedną możliwą awarię oraz sposób weryfikacji.
-
-## Kryteria zaliczenia etapu
-
-- Działa funkcja z tego laboratorium i weryfikacja jest powtarzalna.
-- Konto runtime ma tylko DML do schematu shop, konto migracyjne używane jest oddzielnie.
-- Nie ma połączeń z `sa`, tajnych haseł ani `Database.Migrate()` w kodzie aplikacji.
-- Wytworzono kod, testy i krótki dowód wykonania (SQL/response/log).
-
-> **Uwaga:** to instrukcja dydaktyczna z krokami i kryteriami odbioru. Kody klas, gotowa solucja, endpointy i automatyzacja wdrożenia stanowią osobny pakiet implementacyjny; obecny plik nie udaje przetestowanego projektu end-to-end.
+- Pokaz używa konta `orm_shop_app`, a migracja pozostaje osobnym krokiem konta deploy.
+- W oddanym repozytorium nie ma `.env`, `secrets.json` ani haseł.
+- Ocena wynika z kryteriów punktowych, nie z samego slajdu.

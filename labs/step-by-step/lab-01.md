@@ -6,7 +6,7 @@
 **Temat:** Przygotowanie środowiska i separacja tożsamości
 
 ## Cel
-Po wykonaniu student potrafi odtworzyć czynności i wskazać dowody działania oraz granice uprawnień.
+Student uruchamia SQL Server 2022 CU26, zakłada osobne konta runtime i deploy oraz startuje starter API pod adresem http://localhost:5080 bez migracji przy starcie.
 
 ## Krok 1. Zweryfikuj narzędzia
 
@@ -43,7 +43,7 @@ Oczekiwany build **16.0.4265.3**, CU26.
 
 ## Krok 4. Załóż bazę i schema
 
-W połączeniu administratora otwórz i uruchom [01-bootstrap.sql](security/01-bootstrap.sql). Potwierdź:
+W połączeniu administratora otwórz i uruchom [01-bootstrap.sql](../security/01-bootstrap.sql). Potwierdź:
 ~~~sql
 SELECT name, compatibility_level FROM sys.databases WHERE name=N'OrmShop';
 SELECT name FROM OrmShop.sys.schemas WHERE name=N'shop';
@@ -52,29 +52,32 @@ SELECT name FROM OrmShop.sys.schemas WHERE name=N'shop';
 
 ## Krok 5. Załóż osobne konta
 
-W SSMS włącz **Query → SQLCMD Mode**, otwórz [02-create-logins.sql](security/02-create-logins.sql), zastąp dwa hasła różnymi silnymi losowymi hasłami, nie zapisuj w repo i wykonaj **na izolowanym lokalnym SQL Server**. Unikaj zapisu pliku z hasłami. Dla wieloosobowej instancji uczelni konta i sekrety nadaje administrator, nie student.
+W SSMS włącz **Query → SQLCMD Mode**, otwórz [02-create-logins.sql](../security/02-create-logins.sql), zastąp dwa hasła różnymi silnymi losowymi hasłami i wykonaj skrypt **na izolowanym lokalnym SQL Server**. Hasło nie może zawierać apostrofu (`'`), bo trafia do literału T-SQL. Nie zapisuj pliku z hasłami. Skrypt można uruchomić ponownie: istniejący login dostanie nowe hasło, a członkostwo w roli nie spowoduje błędu. Dla wieloosobowej instancji uczelni konta i sekrety nadaje administrator, nie student.
 
 ## Krok 6. Zweryfikuj granice
 
-Wykonaj [03-verify-permissions.sql](security/03-verify-permissions.sql) jako administrator. Utwórz **oddzielne** połączenie w SSMS jako `orm_shop_app` do bazy OrmShop, wykonaj:
+Wykonaj [03-verify-permissions.sql](../security/03-verify-permissions.sql) jako administrator. Utwórz **oddzielne** połączenie w SSMS jako `orm_shop_app` do bazy OrmShop, wykonaj:
 ~~~sql
 SELECT USER_NAME() AS DbUser, ORIGINAL_LOGIN() AS LoginName;
 SELECT HAS_PERMS_BY_NAME(N'shop',N'SCHEMA',N'ALTER') AS CanAlterShop;
 SELECT HAS_PERMS_BY_NAME(N'OrmShop',N'DATABASE',N'CREATE TABLE') AS CanCreateTable;
 ~~~
-Wynik testów uprawnień: oba **0**. Dla deploy sprawdź, że może ALTER schematu shop, ale nie jest członkiem db_owner.
+Wynik testów uprawnień: oba **0**. W kolejnym oknie, jako `orm_shop_deploy`, sprawdź ALTER na schemacie shop oraz odmowę utworzenia tabeli poza tym schematem:
+~~~sql
+SELECT HAS_PERMS_BY_NAME(N'shop',N'SCHEMA',N'ALTER') AS CanAlterShop;
+CREATE TABLE dbo.ShouldFail (Id int);
+~~~
+`CanAlterShop` ma być **1**. `CREATE TABLE dbo.ShouldFail` ma się nie udać: samo uprawnienie `CREATE TABLE` jest bazodanowe, a obiekt w `dbo` wymaga jeszcze `ALTER` na tym schemacie. Deploy nie może być członkiem `db_owner`.
 
 ## Krok 7. Uruchom starter C#
 
 ~~~powershell
-dotnet restore src/OrmShop.Api/OrmShop.Api.csproj
-dotnet build src/OrmShop.Api/OrmShop.Api.csproj
+dotnet build OrmShop.sln
 cd src/OrmShop.Api
-dotnet user-secrets init
 dotnet user-secrets set "ConnectionStrings:ShopDb" "Server=localhost,14333;Database=OrmShop;User ID=orm_shop_app;Password=WPISZ_WLASNE_HASLO;Encrypt=True;TrustServerCertificate=True"
 dotnet run
 ~~~
-Zamiast wklejać sekret do powłoki z historią, użyj interaktywnej konfiguracji lub sekretów środowiska; powyższy tekst jest szablonem. Endpoint `/health` działa; `/products` nie będzie działać do czasu pierwszej migracji w Lab 02.
+`UserSecretsId` jest już w projekcie, a `Properties/launchSettings.json` ustawia środowisko Development i adres http://localhost:5080. W Development aplikacja czyta user-secrets i wypisuje tekst SQL w konsoli. Zamiast wklejać sekret do powłoki z historią, użyj interaktywnej konfiguracji lub sekretów środowiska; powyższy tekst jest szablonem. `GET /health` działa bez bazy. `GET /products` zwróci błąd połączenia albo brak tabeli do czasu migracji w Lab 02.
 
 ## Oddanie etapu
 
@@ -96,6 +99,4 @@ Zapisz numer builda, zrzut ról oraz wynik odmowy DDL. W ramach Lab 01 nie twór
 - [ ] Skrypt migracji przejrzany i uruchomiony oddzielnie.
 - [ ] Wyniki i błędy zostały zapisane bez ujawnienia haseł.
 
-**Powiązane źródła:** [architektura bezpieczeństwa](architecture-and-security.md), [projekt C#](../src/README.md), [wspólny model](../lectures/orm-shop-case-study.md).
-
-> Status: instrukcja prowadząca przez etap. W laboratoriach 05–07 część implementacji jest zadaniem studenta; test uruchomieniowy całego kursu nie został jeszcze wykonany na żywym kontenerze.
+**Powiązane źródła:** [architektura bezpieczeństwa](../architecture-and-security.md), [projekt C#](../../src/README.md), [wspólny model](../../lectures/orm-shop-case-study.md).

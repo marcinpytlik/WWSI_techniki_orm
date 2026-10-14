@@ -1,63 +1,34 @@
 # Lab 06 — Transakcje, rowversion i odporność na błędy
 
 **Zjazd:** 17.01.2027  
-**Zakres:** Atomowość tworzenia zamówienia i świadoma obsługa konfliktów zapisu.  
-**Środowisko:** .NET 10, EF Core 10, SQL Server 2022 CU26, port 14333.  
-**Czas:** 11:30–14:30 (180 min; planuj przerwy i czas samodzielny).
+**Czas:** 11:30–14:30 (180 min)  
+**Procedura:** [instrukcja krok po kroku](step-by-step/lab-06.md). Polecenia są tylko tam.  
+**Wymaga:** ukończonego Lab 05.
 
-## Cel i warunki wstępne
+## Cel
 
-Wykonaj kolejno wcześniejsze laboratoria. Punktem odniesienia jest [model ORM Shop](../lectures/orm-shop-case-study.md). **Nie wykorzystuj `sa` ani uprawnień DDL w aplikacji.** Zapoznaj się z [modelem bezpieczeństwa](architecture-and-security.md).
+Student zapisuje zamówienie z pozycjami w jednej jednostce pracy i pokazuje konflikt `rowversion` na dwa sposoby: dwa `DbContext` oraz nieaktualny token w PUT z Lab 05.
 
-## Wykonanie krok po kroku
+## Co już jest w repozytorium
 
-### Krok 1
+Kolumna `RowVersion` powstaje w migracji z Lab 02. Na tym zjeździe nie dodajesz jej do modelu drugi raz.
 
-Zaimplementuj utworzenie Order + OrderLines jako jedną jednostkę zapisu.
+## Rezultat
 
-**Sprawdzenie:** zapisz rezultat (fragment konsoli, wynik T-SQL lub test automatyczny). Zanotuj konto, którym wykonano operację.
-
-### Krok 2
-
-Dodaj rowversion Product oraz test dwóch DbContext odczytujących i aktualizujących ten sam Product.
-
-**Sprawdzenie:** zapisz rezultat (fragment konsoli, wynik T-SQL lub test automatyczny). Zanotuj konto, którym wykonano operację.
-
-### Krok 3
-
-Pierwszy zapis zatwierdź, drugi powinien uzyskać DbUpdateConcurrencyException.
-
-**Sprawdzenie:** zapisz rezultat (fragment konsoli, wynik T-SQL lub test automatyczny). Zanotuj konto, którym wykonano operację.
-
-### Krok 4
-
-Wyjaśnij RCSI vs SNAPSHOT i wpływ wersjonowania na odczyty, nie mieszając go z rowversion.
-
-**Sprawdzenie:** zapisz rezultat (fragment konsoli, wynik T-SQL lub test automatyczny). Zanotuj konto, którym wykonano operację.
-
-### Krok 5
-
-Zademonstruj rollback po błędzie, omów retry i potrzebę idempotentnych operacji przy integracjach zewnętrznych.
-
-**Sprawdzenie:** zapisz rezultat (fragment konsoli, wynik T-SQL lub test automatyczny). Zanotuj konto, którym wykonano operację.
-
-## Rezultat wymagany
-
-Test atomowości transakcji, kontrolowany konflikt rowversion i dokument decyzji o obsłudze 409.
+- Test atomowości: błąd pozycji nie zostawia osieroconego zamówienia.
+- `DbUpdateConcurrencyException` z dwóch kontekstów.
+- HTTP 409 ze starego `RowVersion`.
+- Krótka tabela: RCSI, SNAPSHOT i `rowversion` opisane osobno.
 
 ## Pytanie kontrolne
 
-Czy RCSI zastępuje rowversion?
+Czy RCSI zastępuje `rowversion`?
 
 ## Zadanie samodzielne
 
-Udokumentuj w README projektu decyzję z tego zjazdu, wskaż wykonywany przez aplikację SQL (lub ograniczenie bazy) i opisz jedną możliwą awarię oraz sposób weryfikacji.
+Policz wiersze `shop.Orders` i `shop.OrderLines` przed wymuszonym błędem i po `ROLLBACK`. Oba liczniki mają wrócić do stanu początkowego.
 
-## Kryteria zaliczenia etapu
+## Kryteria zaliczenia
 
-- Działa funkcja z tego laboratorium i weryfikacja jest powtarzalna.
-- Konto runtime ma tylko DML do schematu shop, konto migracyjne używane jest oddzielnie.
-- Nie ma połączeń z `sa`, tajnych haseł ani `Database.Migrate()` w kodzie aplikacji.
-- Wytworzono kod, testy i krótki dowód wykonania (SQL/response/log).
-
-> **Uwaga:** to instrukcja dydaktyczna z krokami i kryteriami odbioru. Kody klas, gotowa solucja, endpointy i automatyzacja wdrożenia stanowią osobny pakiet implementacyjny; obecny plik nie udaje przetestowanego projektu end-to-end.
+- Rollback jest pokazany liczbami, nie tylko opisem.
+- Konflikt HTTP używa tokenu klienta, a nie tokenu świeżo wczytanego przez `FindAsync`.
