@@ -6,7 +6,7 @@ Materiały dydaktyczne do przedmiotu **Narzędzia i techniki ORM** (rok akademic
 
 - C# i platforma .NET
 - Entity Framework Core
-- Microsoft SQL Server
+- Microsoft SQL Server 2022 Developer **CU26** (build `16.0.4265.3`, obraz `2022-CU26-ubuntu-22.04`)
 - SQL Server Management Studio / Visual Studio Code
 - Docker (opcjonalny sposób uruchomienia bazy)
 
