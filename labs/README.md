@@ -16,6 +16,21 @@
 | 07 | 24.01.2027 | Wydajność, Dapper i testy | [Lab 07](lab-07-07-wydajnosc-i-testy.md) |
 | 08 | nieustalona | Finał aplikacji | [Lab 08](lab-08-08-final-orm-shop.md) |
 
+## Instrukcje wykonania krok po kroku
+
+| Zjazd | Instrukcja |
+|---|---|
+| 01 | [Środowisko, SQL Server, osobne konta](step-by-step/lab-01.md) |
+| 02 | [Model i migracja pod oddzielnym loginem](step-by-step/lab-02.md) |
+| 03 | [Relacje, klucze i test ograniczeń](step-by-step/lab-03.md) |
+| 04 | [LINQ, diagnostyka T-SQL i plan](step-by-step/lab-04.md) |
+| 05 | [CRUD, DTO i śledzenie zmian](step-by-step/lab-05.md) |
+| 06 | [Transakcje i konflikty rowversion](step-by-step/lab-06.md) |
+| 07 | [N+1, Query Store, Dapper i testy](step-by-step/lab-07.md) |
+| 08 | [Finał i odbiór projektu](step-by-step/lab-08.md) |
+
+**Uwaga:** rozpisano zadania i komendy; na etapach 05–07 część kodu pozostaje do samodzielnego wykonania. Nie przeprowadzono jeszcze pełnego testu end-to-end na SQL Server CU26.
+
 ## Materiały wspólne
 
 - [Model bezpieczeństwa i proces wdrożenia](architecture-and-security.md)
