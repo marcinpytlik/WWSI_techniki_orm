@@ -166,3 +166,51 @@ Change Tracker daje wygodę, ale ma koszt i określony czas życia.
 NOTATKI PROWADZĄCEGO — slajd 13
 Przejście do współbieżności.
 -->
+
+---
+
+# Identity Map
+
+```text
+Wiersz SQL ProductId=42
+       ↓
+DbContext śledzi Product(42)
+       ↓
+ponowny odczyt tej samej encji = ta sama instancja
+```
+
+W granicach jednego kontekstu.
+
+<!-- NOTATKI v2: Pokaż rozróżnienie AsNoTracking i IdentityResolution. -->
+
+---
+
+# Disconnected DTO
+
+**Nie wykonuj automatycznie Update() na całym grafie wysłanym przez klienta.**
+
+Pobierz encję, sprawdź uprawnienia, zmodyfikuj jawnie wybrane pola.
+
+<!-- NOTATKI v2: Ryzyko nadpisania wartości i uprawnień. -->
+
+---
+
+# ExecuteUpdate
+
+```csharp
+await db.Products.Where(p => p.Price < 10)
+ .ExecuteUpdateAsync(s => s.SetProperty(
+   p => p.Price, p => p.Price + 1));
+```
+
+**Bez SaveChanges i bez synchronizacji trackera.**
+
+<!-- NOTATKI v2: Zwróć uwagę na stale tracked entities. -->
+
+---
+
+# Decyzja ORM Shop
+
+Które rozwiązanie wybierasz? Nazwij **ryzyko**, sposób pomiaru i wpływ na SQL Server.
+
+<!-- NOTATKI: ćwiczenie do dyskusji; pominąć gdy kończy się czas. -->
