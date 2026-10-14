@@ -59,3 +59,7 @@ Przed 25.10.2026 wykonaj instrukcję: **[Przygotowanie środowiska](docs/przygot
 ## SQL Server do laboratoriów
 
 Uruchomienie ustalonego środowiska SQL Server 2022 CU26: [Docker Compose](docs/docker-sql-server.md). Pliki: `docker-compose.yml` i `.env.example`.
+
+## Wykłady
+
+[Program i materiały ośmiu wykładów](lectures/README.md) — scenariusze tematyczne, przykłady C# oraz pytania do dyskusji.
