@@ -51,3 +51,7 @@ Zadeklarowany wymiar: **18 godzin dydaktycznych wykładu i 27 godzin dydaktyczny
 ## Status
 
 Repozytorium w fazie przygotowania. Harmonogram merytoryczny ma charakter roboczy; szczegółowe instrukcje laboratoryjne będą rozwijane osobno.
+
+## Przygotowanie przed pierwszym zjazdem
+
+Przed 25.10.2026 wykonaj instrukcję: **[Przygotowanie środowiska](docs/przygotowanie-srodowiska.md)**.
