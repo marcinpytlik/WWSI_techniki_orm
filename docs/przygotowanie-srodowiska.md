@@ -31,56 +31,26 @@ docker info
 
 Dwa ostatnie polecenia i WSL dotyczą wariantu kontenerowego. Docker Desktop powinien działać w trybie kontenerów Linux.
 
-## 2. SQL Server 2022 CU26 — Docker
+## 2. SQL Server 2022 CU26 — Docker Compose
 
-**Wersja obowiązująca dla kursu:** SQL Server 2022 Developer CU26 (KB5093420), build `16.0.4265.3`, Ubuntu 22.04, tag `2022-CU26-ubuntu-22.04`. Nie używaj `2022-latest`, ponieważ jego zawartość może się zmieniać.
-
-Przed uruchomieniem kontenera pobierz dokładnie określony obraz:
+**Obowiązująca metoda uruchomienia:** [Instrukcja Docker Compose](docker-sql-server.md). W katalogu głównym repozytorium:
 
 ~~~powershell
-docker pull mcr.microsoft.com/mssql/server:2022-CU26-ubuntu-22.04
+Copy-Item .env.example .env
+notepad .env  # ustaw własne silne hasło sa
+docker compose pull
+docker compose up -d
+docker compose ps
 ~~~
 
-Użyj lokalnego kontenera do ćwiczeń (nie do produkcji). Hasło podaj interaktywnie i nie zapisuj go w repozytorium.
-
-~~~powershell
-docker volume create orm_sql_data
-$SqlPassword = Read-Host 'Podaj silne haslo sa'
-docker run -d --name orm-sql2022 `
-  -e 'ACCEPT_EULA=Y' `
-  -e "MSSQL_SA_PASSWORD=$SqlPassword" `
-  -p 127.0.0.1:14333:1433 `
-  -v orm_sql_data:/var/opt/mssql `
-  mcr.microsoft.com/mssql/server:2022-CU26-ubuntu-22.04
-docker ps
-docker logs --tail 50 orm-sql2022
-~~~
-
-Hasło sa musi spełniać wymagania złożoności SQL Server. Docker musi mieć odpowiednią ilość pamięci. Dane pozostają w wolumenie Docker.
-
-Połącz się w SSMS: **localhost,14333**, SQL Server Authentication, login **sa**, hasło podane podczas uruchamiania. W lokalnym laboratorium, jeśli certyfikat nie jest zaufany, można zaznaczyć **Trust server certificate**; nie przenoś tego ustawienia bez analizy do produkcji.
-
-Sprawdź połączenie:
+Połącz się z `localhost,14333` jako `sa`. Wykonaj w SSMS:
 
 ~~~sql
-SELECT @@VERSION AS SqlServerVersion;
 SELECT SERVERPROPERTY('ProductVersion') AS ProductVersion,
-       SERVERPROPERTY('ProductUpdateLevel') AS ProductUpdateLevel,
-       SERVERPROPERTY('Edition') AS Edition;
-SELECT DB_NAME() AS CurrentDatabase;
-
--- Oczekiwany build: 16.0.4265.3, CU26
--- Zgodność bazy ćwiczeniowej (po jej utworzeniu):
-SELECT name, compatibility_level FROM sys.databases;
+       SERVERPROPERTY('ProductUpdateLevel') AS ProductUpdateLevel;
 ~~~
 
-Uruchamianie i zatrzymywanie:
-
-~~~powershell
-docker stop orm-sql2022
-docker start orm-sql2022
-docker logs --tail 100 orm-sql2022
-~~~
+Oczekiwane wartości: `16.0.4265.3` i `CU26`. Dokładny obraz: `mcr.microsoft.com/mssql/server:2022-CU26-ubuntu-22.04`.
 
 ## 3. Entity Framework Core — instalacja i test
 
