@@ -63,3 +63,7 @@ Uruchomienie ustalonego środowiska SQL Server 2022 CU26: [Docker Compose](docs/
 ## Wykłady
 
 [Program i materiały ośmiu wykładów](lectures/README.md) — scenariusze tematyczne, przykłady C# oraz pytania do dyskusji.
+
+## Laboratoria ORM Shop
+
+[Osiem laboratoriów, skrypty SQL, model najmniejszych uprawnień i starter aplikacji](labs/README.md). Konto aplikacji `orm_shop_app` nie ma uprawnień DDL; zmiany schematu przeprowadza osobna tożsamość `orm_shop_deploy` po przeglądzie skryptu.
