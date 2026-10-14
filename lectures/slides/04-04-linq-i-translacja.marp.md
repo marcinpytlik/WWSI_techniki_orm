@@ -176,3 +176,47 @@ Nie wyciągaj wszystkich wierszy do pamięci bez uzasadnienia.
 NOTATKI PROWADZĄCEGO — slajd 13
 Poproś studentów o przewidzenie wygenerowanego SQL.
 -->
+
+---
+
+# Expression Trees
+
+```text
+IQueryable → expression tree → EF Core provider
+                                     ↓
+                                parametry + T-SQL
+```
+
+<!-- NOTATKI v2: Wyjaśnij odroczone wykonywanie i granicę AsEnumerable. -->
+
+---
+
+# Include + Take
+
+```csharp
+var q = db.Customers.OrderBy(c => c.Id)
+    .Take(100).Include(c => c.Orders);
+Console.WriteLine(q.ToQueryString());
+```
+
+**Dlaczego podzapytanie ogranicza klientów przed JOIN?**
+
+<!-- NOTATKI v2: SQL sprawdź na żywo: kształt zależy od providera. -->
+
+---
+
+# SQL-first w EF Core
+
+FromSql, parametryzacja, raw SQL.
+
+**Nigdy nie sklejaj wartości od użytkownika z tekstem SQL.**
+
+<!-- NOTATKI v2: Wytłumacz, że nazw tabel i kolumn nie parametryzuje się tak samo jak wartości. -->
+
+---
+
+# Decyzja ORM Shop
+
+Które rozwiązanie wybierasz? Nazwij **ryzyko**, sposób pomiaru i wpływ na SQL Server.
+
+<!-- NOTATKI: ćwiczenie do dyskusji; pominąć gdy kończy się czas. -->
