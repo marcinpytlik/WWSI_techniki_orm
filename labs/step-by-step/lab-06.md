@@ -10,7 +10,7 @@ Student zapisuje zamówienie atomowo i wywołuje konflikt współbieżności nie
 
 ## Krok 1. Sprawdź rowversion
 
-`RowVersion` jest już w modelu ze zjazdu 02. W `ShopDbContext.cs` potwierdź `Property(p => p.RowVersion).IsRowVersion()` i inicjalizację `= null!` w klasie `Product`. W SQL Server:
+`RowVersion` jest już w modelu ze zjazdu 02. W `src/OrmShop.Api/Data/ShopDbContext.cs` potwierdź `Property(p => p.RowVersion).IsRowVersion()` i inicjalizację `= null!` w klasie `Product`. W SQL Server:
 ~~~sql
 SELECT c.name, TYPE_NAME(c.user_type_id) AS TypeName
 FROM sys.columns c WHERE c.object_id=OBJECT_ID(N'shop.Products');
