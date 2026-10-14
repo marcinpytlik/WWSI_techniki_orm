@@ -169,3 +169,45 @@ Transakcje zapewniają spójność, ale izolacja i czas życia mają koszt.
 NOTATKI PROWADZĄCEGO — slajd 13
 Zapowiedź wydajności.
 -->
+
+---
+
+# RCSI i SNAPSHOT
+
+**RCSI:** wersjonowane odczyty w READ COMMITTED.
+
+**SNAPSHOT:** obraz danych na poziomie transakcji.
+
+Oba rozwiązania mają inne konsekwencje dla konfliktów.
+
+<!-- NOTATKI v2: Nie utożsamiaj rowversion z snapshot isolation. -->
+
+---
+
+# rowversion — konflikt
+
+```text
+A czyta wersję 0x01 → aktualizuje → 0x02
+B próbuje UPDATE ... WHERE RowVersion=0x01
+0 wierszy → konflikt optymistyczny
+```
+
+<!-- NOTATKI v2: SQL schematyczny; w EF Core DbUpdateConcurrencyException. -->
+
+---
+
+# Outbox i retry
+
+Zapis zamówienia + zdarzenie w outbox w tej samej transakcji.
+
+Publikacja do brokera następuje osobno; retry musi być idempotentny.
+
+<!-- NOTATKI v2: Lokalna transakcja SQL nie obejmuje wprost systemów zewnętrznych. -->
+
+---
+
+# Decyzja ORM Shop
+
+Które rozwiązanie wybierasz? Nazwij **ryzyko**, sposób pomiaru i wpływ na SQL Server.
+
+<!-- NOTATKI: ćwiczenie do dyskusji; pominąć gdy kończy się czas. -->
