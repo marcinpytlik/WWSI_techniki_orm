@@ -1,0 +1,19 @@
+# .NET / IDE
+bin/
+obj/
+.vs/
+.vscode/*
+!.vscode/extensions.json
+*.user
+*.suo
+TestResults/
+coverage/
+# Secrets and machine-specific settings
+.env
+.env.*
+!.env.example
+appsettings.Development.json
+**/secrets.json
+# OS
+.DS_Store
+Thumbs.db
