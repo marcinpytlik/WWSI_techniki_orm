@@ -82,7 +82,7 @@ Repozytorium jest prywatne — prowadzący musi nadać dostęp studentom.
 
 ## 5. Checklista przed pierwszym zjazdem
 
-- [ ] .NET 10 SDK działa (dotnet --version)
+- [ ] .NET 10 SDK działa (`dotnet --version`; `global.json` wymaga SDK 10 i rolki do nowszego wydania 10.x)
 - [ ] VS Code uruchamia się i rozpoznaje kod C#
 - [ ] Git działa
 - [ ] SQL Server jest osiągalny z SSMS albo VS Code
@@ -90,6 +90,7 @@ Repozytorium jest prywatne — prowadzący musi nadać dostęp studentom.
 - [ ] dotnet ef --version działa
 - [ ] Projekt testowy dotnet run kończy się bez błędu
 - [ ] Mam dostęp do repozytorium albo zgłosiłem problem prowadzącemu
+- [ ] `dotnet build OrmShop.sln` w sklonowanym repozytorium kończy się powodzeniem
 
 ## 6. Typowe problemy
 

@@ -6,7 +6,7 @@
 **Temat:** CRUD i Change Tracker
 
 ## Cel
-Po wykonaniu student potrafi odtworzyć czynności i wskazać dowody działania oraz granice uprawnień.
+Student dodaje zapis produktu przez DTO. Aktualizacja wysyła RowVersion pobrany wcześniej przez GET, więc nieaktualny klient dostaje HTTP 409.
 
 ## Krok 1. Utwórz kontrakty DTO
 
@@ -14,9 +14,9 @@ W `src/OrmShop.Api` dodaj `ProductContracts.cs`:
 ~~~csharp
 namespace OrmShop.Api;
 public sealed record CreateProduct(string Sku, string Name, decimal Price);
-public sealed record UpdateProduct(string Name, decimal Price);
+public sealed record UpdateProduct(string Name, decimal Price, byte[] RowVersion);
 ~~~
-Nie przyjmuj encji EF jako bezpośredniego kontraktu HTTP.
+Nie przyjmuj encji EF jako bezpośredniego kontraktu HTTP. `RowVersion` pochodzi z `GET /products` (JSON koduje `byte[]` jako Base64).
 
 ## Krok 2. Dodaj POST
 
@@ -34,26 +34,37 @@ app.MapPost("/products", async (CreateProduct input, ShopDbContext db, Cancellat
 ~~~
 Dodatkowo waliduj długości Sku (40) i Name (120) zgodnie z modelem.
 
-## Krok 3. Dodaj PUT
+## Krok 3. Dodaj PUT z tokenem klienta
+
+`FindAsync` wczytuje aktualny `RowVersion`. Samo przypisanie `Name` i `Price` po takim odczycie prawie nigdy nie zgłosi konfliktu, bo klauzula `WHERE` dostałaby token świeżo pobrany z bazy. Podmień oryginalną wartość na token przysłany przez klienta:
 
 ~~~csharp
 app.MapPut("/products/{id:int}", async (int id, UpdateProduct input, ShopDbContext db, CancellationToken ct) =>
 {
-    var p = await db.Products.FindAsync([id], ct);
-    if (p is null) return Results.NotFound();
-    if (string.IsNullOrWhiteSpace(input.Name) || input.Price < 0)
+    var product = await db.Products.FindAsync([id], ct);
+    if (product is null) return Results.NotFound();
+    if (string.IsNullOrWhiteSpace(input.Name) || input.Name.Length > 120 || input.Price < 0)
         return Results.BadRequest();
-    p.Name = input.Name;
-    p.Price = input.Price;
-    await db.SaveChangesAsync(ct);
+
+    db.Entry(product).Property(x => x.RowVersion).OriginalValue = input.RowVersion;
+    product.Name = input.Name;
+    product.Price = input.Price;
+    try
+    {
+        await db.SaveChangesAsync(ct);
+    }
+    catch (DbUpdateConcurrencyException)
+    {
+        return Results.Conflict(new { error = "Product changed. Reload RowVersion and retry." });
+    }
     return Results.NoContent();
 });
 ~~~
-Uzupełnij walidację długości i wyjątki unikalności/DB; prezentowany kod to etap pośredni, nie gotowy publiczny API.
+Uzupełnij wyjątek unikalności SKU. Prezentowany kod jest etapem ćwiczenia: nie zwracaj connection stringu ani stack trace.
 
 ## Krok 4. Sprawdź HTTP
 
-W PowerShell użyj `Invoke-RestMethod` z adresem wypisanym przez `dotnet run`. Utwórz produkt i zaktualizuj go; porównaj odczyt GET. Wywołaj błędne dane, oczekuj 400, nieistniejący Id → 404.
+W PowerShell użyj `Invoke-RestMethod` i adresu http://localhost:5080. Utwórz produkt, odczytaj `RowVersion` z GET i wyślij go w PUT. Wywołaj błędne dane, oczekuj 400, nieistniejący Id → 404. Drugi PUT ze starym `RowVersion` ma zwrócić 409.
 
 ## Krok 5. Śledzenie zmian
 
@@ -83,6 +94,4 @@ Przygotuj testy poprawnych i błędnych danych oraz dowody, że API nadal dział
 - [ ] Skrypt migracji przejrzany i uruchomiony oddzielnie.
 - [ ] Wyniki i błędy zostały zapisane bez ujawnienia haseł.
 
-**Powiązane źródła:** [architektura bezpieczeństwa](architecture-and-security.md), [projekt C#](../src/README.md), [wspólny model](../lectures/orm-shop-case-study.md).
-
-> Status: instrukcja prowadząca przez etap. W laboratoriach 05–07 część implementacji jest zadaniem studenta; test uruchomieniowy całego kursu nie został jeszcze wykonany na żywym kontenerze.
+**Powiązane źródła:** [architektura bezpieczeństwa](../architecture-and-security.md), [projekt C#](../../src/README.md), [wspólny model](../../lectures/orm-shop-case-study.md).

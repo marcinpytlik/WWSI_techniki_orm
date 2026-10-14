@@ -6,25 +6,25 @@
 **Temat:** Finał ORM Shop
 
 ## Cel
-Po wykonaniu student potrafi odtworzyć czynności i wskazać dowody działania oraz granice uprawnień.
+Student w 45 minut pokazuje projekt oddany przed zajęciami. Na sali nie dopisuje funkcji.
 
 ## Krok 1. Przed zjazdem
 
-Zatwierdź repozytorium: README, instrukcja Docker, diagram ERD, kod API, migracje, testy, przykłady T-SQL, opis ról, wyniki wydajności. Finał trwa tylko 45 minut, więc student nie implementuje już nowych funkcji.
+Zatwierdź repozytorium dzień wcześniej: README, instrukcja uruchomienia, diagram ERD, kod API, migracje, testy, przykłady T-SQL, opis ról i wyniki wydajności. Termin zjazdu ustala dziekanat; do tego czasu data w planie pozostaje pusta. Finał na sali trwa 45 minut i nie służy do dopisywania funkcji.
 
 ## Krok 2. Uruchom z czystego stanowiska
 
 ~~~powershell
 git status
 docker compose up -d
-dotnet build src/OrmShop.Api/OrmShop.Api.csproj
+dotnet build OrmShop.sln
 dotnet run --project src/OrmShop.Api/OrmShop.Api.csproj
 ~~~
-Weryfikuj właściwą wersję CU26 i istniejącą bazę; bez automatycznej migracji.
+API ma odpowiedzieć na http://localhost:5080/health. Zweryfikuj CU26 i istniejącą bazę. Migracja nie uruchamia się razem z procesem.
 
 ## Krok 3. Zaprezentuj zachowanie
 
-Pokaż GET/POST/PUT, relacje, raport Dapper i demonstrację jednego zapytania LINQ z SQL Server. Przy większej grupie zrób demonstracje wybranych projektów, resztę oceniaj na podstawie repo i testów.
+Każdy pokaz trwa do 6 minut, w stałej kolejności: start API na http://localhost:5080, jeden LINQ razem z SQL, konflikt 409, odmowa DDL dla konta aplikacji. Siedem takich pokazów wypełnia 45 minut. Przy liczniejszej grupie na żywo wchodzą wybrane projekty, a pozostałe są oceniane z repozytorium oddanego przed zjazdem.
 
 ## Krok 4. Udowodnij bezpieczeństwo
 
@@ -58,6 +58,4 @@ Ocena według wspólnych kryteriów i rzeczywistych dowodów działania, nie wy�
 - [ ] Skrypt migracji przejrzany i uruchomiony oddzielnie.
 - [ ] Wyniki i błędy zostały zapisane bez ujawnienia haseł.
 
-**Powiązane źródła:** [architektura bezpieczeństwa](architecture-and-security.md), [projekt C#](../src/README.md), [wspólny model](../lectures/orm-shop-case-study.md).
-
-> Status: instrukcja prowadząca przez etap. W laboratoriach 05–07 część implementacji jest zadaniem studenta; test uruchomieniowy całego kursu nie został jeszcze wykonany na żywym kontenerze.
+**Powiązane źródła:** [architektura bezpieczeństwa](../architecture-and-security.md), [projekt C#](../../src/README.md), [wspólny model](../../lectures/orm-shop-case-study.md).

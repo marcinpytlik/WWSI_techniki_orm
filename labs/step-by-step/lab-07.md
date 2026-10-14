@@ -6,7 +6,7 @@
 **Temat:** Wydajność i testy
 
 ## Cel
-Po wykonaniu student potrafi odtworzyć czynności i wskazać dowody działania oraz granice uprawnień.
+Student mierzy koszt N+1, porównuje projekcję EF z odczytem Dappera i zostawia test integracyjny na SQL Server, nie na providerze InMemory.
 
 ## Krok 1. Przygotuj reprezentatywne dane
 
@@ -68,6 +68,4 @@ Dostarcz pomiary przed/po, działający odczyt przez Dapper i test integracyjny 
 - [ ] Skrypt migracji przejrzany i uruchomiony oddzielnie.
 - [ ] Wyniki i błędy zostały zapisane bez ujawnienia haseł.
 
-**Powiązane źródła:** [architektura bezpieczeństwa](architecture-and-security.md), [projekt C#](../src/README.md), [wspólny model](../lectures/orm-shop-case-study.md).
-
-> Status: instrukcja prowadząca przez etap. W laboratoriach 05–07 część implementacji jest zadaniem studenta; test uruchomieniowy całego kursu nie został jeszcze wykonany na żywym kontenerze.
+**Powiązane źródła:** [architektura bezpieczeństwa](../architecture-and-security.md), [projekt C#](../../src/README.md), [wspólny model](../../lectures/orm-shop-case-study.md).

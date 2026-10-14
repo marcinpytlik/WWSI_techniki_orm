@@ -6,11 +6,11 @@
 **Temat:** Transakcje i współbieżność
 
 ## Cel
-Po wykonaniu student potrafi odtworzyć czynności i wskazać dowody działania oraz granice uprawnień.
+Student zapisuje zamówienie atomowo i wywołuje konflikt współbieżności nieaktualnym tokenem RowVersion, a nie świeżym odczytem z tej samej transakcji.
 
 ## Krok 1. Sprawdź rowversion
 
-W `ShopDbContext.cs` potwierdź `Property(p=>p.RowVersion).IsRowVersion()`. W SQL Server:
+`RowVersion` jest już w modelu ze zjazdu 02. W `ShopDbContext.cs` potwierdź `Property(p => p.RowVersion).IsRowVersion()` i inicjalizację `= null!` w klasie `Product`. W SQL Server:
 ~~~sql
 SELECT c.name, TYPE_NAME(c.user_type_id) AS TypeName
 FROM sys.columns c WHERE c.object_id=OBJECT_ID(N'shop.Products');
@@ -23,7 +23,7 @@ W tym samym procesie otwórz **dwa różne DbContext** (np. przez `IDbContextFac
 
 ## Krok 3. Obsłuż konflikt w aplikacji
 
-Złap `DbUpdateConcurrencyException` w obsłudze aktualizacji, zwróć HTTP 409 i poinformuj klienta o potrzebie ponownego pobrania danych. Nie powtarzaj zapisu bez decyzji o rozstrzygnięciu konfliktu.
+PUT z Lab 05 podstawia w `OriginalValue` token przysyłany przez klienta i przy `DbUpdateConcurrencyException` zwraca HTTP 409. Pokaż to drugim żądaniem ze starym `RowVersion`. Nie powtarzaj zapisu bez decyzji o rozstrzygnięciu konfliktu. Osobno zostaw demonstrację dwóch `DbContext`: ona nie przechodzi przez HTTP i nie zastępuje tokenu klienta.
 
 ## Krok 4. Atomowe utworzenie zamówienia
 
@@ -57,6 +57,4 @@ Oddaj test dwóch kontekstów, obsługę 409 i dowód rollback.
 - [ ] Skrypt migracji przejrzany i uruchomiony oddzielnie.
 - [ ] Wyniki i błędy zostały zapisane bez ujawnienia haseł.
 
-**Powiązane źródła:** [architektura bezpieczeństwa](architecture-and-security.md), [projekt C#](../src/README.md), [wspólny model](../lectures/orm-shop-case-study.md).
-
-> Status: instrukcja prowadząca przez etap. W laboratoriach 05–07 część implementacji jest zadaniem studenta; test uruchomieniowy całego kursu nie został jeszcze wykonany na żywym kontenerze.
+**Powiązane źródła:** [architektura bezpieczeństwa](../architecture-and-security.md), [projekt C#](../../src/README.md), [wspólny model](../../lectures/orm-shop-case-study.md).

@@ -26,8 +26,8 @@ Po zakończeniu zajęć student potrafi:
 | 7 | Optymalizacja ORM | N+1, no-tracking, indeksy, plany wykonania |
 | 8 | Architektura i testowanie | Przegląd i obrona projektu, podsumowanie |
 
-## Zaliczenie — propozycja
-Projekt indywidualny lub w parach: aplikacja CRUD z EF Core, bazą SQL Server, relacjami, migracjami i analizą minimum dwóch wygenerowanych zapytań SQL. Kryteria i punktacja do uzgodnienia z prowadzącym.
+## Zaliczenie
+Projekt indywidualny lub w parach. Zakres, punktacja (próg 60/100) i sposób oddania: [projekt zaliczeniowy](../project/README.md).
 
 ## Organizacja
-18 h wykładów i 27 h laboratoriów według przydziału. Terminy i godziny: README repozytorium. Nierozliczoną różnicę między wymiarem dydaktycznym i godzinami zegarowymi należy wyjaśnić przed zatwierdzeniem sylabusa.
+Deklarowany wymiar to 18 h wykładów i 27 h laboratoriów. Terminy i policzona różnica wobec znanych slotów: [README repozytorium](../README.md). Sylabus zatwierdzamy po potwierdzeniu tej różnicy z dziekanatem.

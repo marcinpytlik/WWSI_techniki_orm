@@ -1,63 +1,33 @@
 # Lab 03 — Orders, OrderLines, FK i reguły usuwania
 
 **Zjazd:** 22.11.2026  
-**Zakres:** Zaprojektowanie modelu transakcyjnego bez przypadkowych kaskad usuwania.  
-**Środowisko:** .NET 10, EF Core 10, SQL Server 2022 CU26, port 14333.  
-**Czas:** 11:30–14:30 (180 min; planuj przerwy i czas samodzielny).
+**Czas:** 11:30–14:30 (180 min)  
+**Procedura:** [instrukcja krok po kroku](step-by-step/lab-03.md). Polecenia są tylko tam.  
+**Wymaga:** ukończonego Lab 02.
 
-## Cel i warunki wstępne
+## Cel
 
-Wykonaj kolejno wcześniejsze laboratoria. Punktem odniesienia jest [model ORM Shop](../lectures/orm-shop-case-study.md). **Nie wykorzystuj `sa` ani uprawnień DDL w aplikacji.** Zapoznaj się z [modelem bezpieczeństwa](architecture-and-security.md).
+Student czyta relacje już obecne w `ShopDbContext`, sprawdza je w `sys.foreign_keys` i pokazuje, że usunięcie klienta z zamówieniem jest odrzucone przez SQL Server.
 
-## Wykonanie krok po kroku
+## Co już jest w repozytorium
 
-### Krok 1
+`Order`, `OrderLine`, klucz złożony i `DeleteBehavior` są w starterze od pierwszej migracji. Ten zjazd ich nie dopisuje. Nowa migracja pojawia się tylko wtedy, gdy inspekcja `sys.indexes` wykaże brak indeksu, którego zapytanie naprawdę potrzebuje.
 
-Dodaj Order (Id, CustomerId, CreatedAt) i OrderLine (OrderId, ProductId, Quantity, UnitPrice).
+## Rezultat
 
-**Sprawdzenie:** zapisz rezultat (fragment konsoli, wynik T-SQL lub test automatyczny). Zanotuj konto, którym wykonano operację.
-
-### Krok 2
-
-Skonfiguruj relacje Customer→Orders, Order→OrderLines, Product→OrderLines. Rozważ composite key (OrderId, ProductId) i jego ograniczenia.
-
-**Sprawdzenie:** zapisz rezultat (fragment konsoli, wynik T-SQL lub test automatyczny). Zanotuj konto, którym wykonano operację.
-
-### Krok 3
-
-Ustaw Restrict/NoAction dla usuwania Customer z historią zamówień oraz Product użytego na zamówieniu.
-
-**Sprawdzenie:** zapisz rezultat (fragment konsoli, wynik T-SQL lub test automatyczny). Zanotuj konto, którym wykonano operację.
-
-### Krok 4
-
-Wygeneruj migrację; oceń indeksy i klucze obce oraz jej wpływ na dane. Wdróż ją oddzielnym kontem deploy.
-
-**Sprawdzenie:** zapisz rezultat (fragment konsoli, wynik T-SQL lub test automatyczny). Zanotuj konto, którym wykonano operację.
-
-### Krok 5
-
-Wykonaj test integracyjny: wstaw dane, spróbuj usunąć klienta z zamówieniem; sprawdź wyjątek i FK SQL Server.
-
-**Sprawdzenie:** zapisz rezultat (fragment konsoli, wynik T-SQL lub test automatyczny). Zanotuj konto, którym wykonano operację.
-
-## Rezultat wymagany
-
-ERD, poprawne FK, jawne DeleteBehavior oraz migracja zatwierdzona i zastosowana przez deploy.
+- Diagram trzech relacji zgodny z modelem.
+- Wynik inspekcji FK i test negatywny usunięcia klienta.
+- Decyzja o indeksie poparta `sys.indexes`, bez duplikatu indeksu na `Orders.CustomerId`.
 
 ## Pytanie kontrolne
 
-Czy nawigacja Orders automatycznie odczytuje całą kolekcję?
+Czy nawigacja `Orders` automatycznie odczytuje całą kolekcję?
 
 ## Zadanie samodzielne
 
-Udokumentuj w README projektu decyzję z tego zjazdu, wskaż wykonywany przez aplikację SQL (lub ograniczenie bazy) i opisz jedną możliwą awarię oraz sposób weryfikacji.
+Wyjaśnij, czemu usunięcie zamówienia kasuje pozycje, a usunięcie produktu użytego na pozycji jest zabronione.
 
-## Kryteria zaliczenia etapu
+## Kryteria zaliczenia
 
-- Działa funkcja z tego laboratorium i weryfikacja jest powtarzalna.
-- Konto runtime ma tylko DML do schematu shop, konto migracyjne używane jest oddzielnie.
-- Nie ma połączeń z `sa`, tajnych haseł ani `Database.Migrate()` w kodzie aplikacji.
-- Wytworzono kod, testy i krótki dowód wykonania (SQL/response/log).
-
-> **Uwaga:** to instrukcja dydaktyczna z krokami i kryteriami odbioru. Kody klas, gotowa solucja, endpointy i automatyzacja wdrożenia stanowią osobny pakiet implementacyjny; obecny plik nie udaje przetestowanego projektu end-to-end.
+- Test negatywny FK jest wykonany kontem `orm_shop_app` i kończy się `ROLLBACK`.
+- Ewentualna migracja indeksu przechodzi przez przegląd SQL i konto deploy.

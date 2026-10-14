@@ -34,7 +34,11 @@ public sealed class ShopDbContext(DbContextOptions<ShopDbContext> options) : DbC
         {
             e.ToTable("Orders");
             e.HasKey(x => x.Id);
-            e.Property(x => x.CreatedAt).HasDefaultValueSql("SYSUTCDATETIME()");
+            // SYSUTCDATETIME() zwraca datetime2. SQL Server konwertuje tę wartość
+            // na datetimeoffset z offsetem +00:00.
+            e.Property(x => x.CreatedAt)
+                .HasDefaultValueSql("SYSUTCDATETIME()")
+                .ValueGeneratedOnAdd();
             e.HasOne(x => x.Customer).WithMany(x => x.Orders)
                 .HasForeignKey(x => x.CustomerId).OnDelete(DeleteBehavior.NoAction);
         });

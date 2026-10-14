@@ -110,13 +110,13 @@ To nie blokowanie rekordu przed zmianą.
 # rowversion w SQL Server
 
 ```csharp
-public byte[] RowVersion { get; set; } = [];
+public byte[] RowVersion { get; set; } = null!;
 // Fluent API: Property(x => x.RowVersion).IsRowVersion();
 ```
 
 <!--
 NOTATKI PROWADZĄCEGO — slajd 9
-rowversion to licznik binarny, nie data i godzina.
+rowversion to licznik binarny, nie data i godzina. Pusta tablica nie jest wartością „nieustawioną”; sentinelem jest null.
 -->
 
 ---
@@ -124,7 +124,7 @@ rowversion to licznik binarny, nie data i godzina.
 # Jak wygląda UPDATE?
 
 ```sql
-UPDATE dbo.Products SET Price = @price
+UPDATE shop.Products SET Price = @price
 WHERE Id = @id AND RowVersion = @originalVersion;
 ```
 

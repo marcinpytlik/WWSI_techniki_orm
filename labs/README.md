@@ -29,14 +29,16 @@
 | 07 | [N+1, Query Store, Dapper i testy](step-by-step/lab-07.md) |
 | 08 | [Finał i odbiór projektu](step-by-step/lab-08.md) |
 
-**Uwaga:** rozpisano zadania i komendy; na etapach 05–07 część kodu pozostaje do samodzielnego wykonania. Nie przeprowadzono jeszcze pełnego testu end-to-end na SQL Server CU26.
+**Który plik czytać:** polecenia są tylko w `step-by-step/`. Plik `lab-0N-….md` podaje cel, rezultat i kryteria. Przy rozbieżności wykonuj `step-by-step/`.
+
+Na etapach 05–07 student dopisuje zapis, Dappera i testy. Starter kompiluje się poleceniem `dotnet build OrmShop.sln`. Ścieżkę SQL student przechodzi lokalnie od Lab 01; sam build jej nie zastępuje.
 
 ## Materiały wspólne
 
 - [Model bezpieczeństwa i proces wdrożenia](architecture-and-security.md)
 - [Skrypty SQL: bootstrap, loginy i weryfikacja](security/)
 - [Szkielet API .NET](../src/README.md)
-- [Automatyzacja generowania migracji](scripts/prepare-first-migration.ps1)
+- [Generowanie migracji (PowerShell)](scripts/prepare-first-migration.ps1) i [to samo w bash](scripts/prepare-first-migration.sh)
 - [Instrukcja środowiska](../docs/przygotowanie-srodowiska.md)
 - [Docker Compose SQL Server](../docs/docker-sql-server.md)
 
@@ -54,6 +56,4 @@ Każde zajęcia kończą się testami pozytywnymi i negatywnymi, zmianą kodu or
 
 ## Stan implementacji
 
-Utworzono osiem instrukcji etapowych, skrypty SQL do kont i uprawnień, model bezpieczeństwa oraz działający strukturalnie starter C#/EF. **Pełna implementacja endpointów CRUD, Dappera, testów i automatyczny test end-to-end nie są jeszcze dostarczone.** To istotne przed przekazaniem materiałów studentom.
-
-Rozliczenie wymiaru godzin nadal wymaga wyjaśnienia z uczelnią.
+Starter obejmuje odczyt produktów i klientów, log SQL w Development, fabrykę design-time i profil http://localhost:5080. Zapis, Dapper i testy integracyjne zostają zadaniem Lab 05–07. Skrypt loginów można uruchamiać wielokrotnie. Rozliczenie godzin jest policzone w [README repozytorium](../README.md) i czeka na potwierdzenie dziekanatu.

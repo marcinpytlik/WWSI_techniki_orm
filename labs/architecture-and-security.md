@@ -15,11 +15,11 @@ flowchart TB
 | Tożsamość | Przeznaczenie | Uprawnienia | Zakaz |
 |---|---|---|---|
 | sa (bootstrap) | tworzy DB, schema, loginy i role | administrator tylko podczas bootstrapu | użycie w aplikacji |
-| orm_shop_deploy | kontrolowane migracje | CREATE TABLE i inne wybrane CREATE w bazie, ALTER i REFERENCES dla schematu shop, DML w shop | sysadmin, db_owner, domyślnie zmiany innych schematów |
+| orm_shop_deploy | kontrolowane migracje | CREATE TABLE i inne wybrane CREATE w bazie oraz ALTER, REFERENCES i DML na schemacie shop | sysadmin, db_owner, ALTER na schematach innych niż shop |
 | orm_shop_app | uruchomiona aplikacja | SELECT/INSERT/UPDATE/DELETE w schemacie shop | CREATE/ALTER/DROP, db_owner |
 | student | przegląd kodu | Git read i lokalne środowisko | commitowanie sekretów |
 
-*Model uprawnień jest laboratorium, nie gotowym szablonem produkcyjnym.* Uprawnienia deploymentu należy jeszcze bardziej zawężać zgodnie z konkretnym zatwierdzonym skryptem; CREATE TABLE jest uprawnieniem bazodanowym, a ALTER schematu pozwala modyfikować istniejące obiekty w tym schemacie. Dla nowej wersji migracji weryfikujemy każde DDL.
+*Model uprawnień jest laboratorium, nie gotowym szablonem produkcyjnym.* `CREATE TABLE` jest uprawnieniem bazodanowym, ale nowy obiekt wymaga też `ALTER` na schemacie docelowym. Deploy ma `ALTER` tylko na `shop`, więc `CREATE TABLE dbo.ShouldFail` ma się nie udać. Dla kolejnej migracji sprawdzamy każde DDL i nie poszerzamy roli na stałe. Skrypt `02-create-logins.sql` można uruchomić ponownie: istniejący login dostaje hasło z `:setvar`, a powtórne członkostwo w roli jest pomijane. Hasło w `:setvar` nie może zawierać apostrofu.
 
 ## Kolejność i separacja
 
@@ -44,7 +44,7 @@ flowchart TB
 - Zaloguj się jako app → próba `CREATE TABLE shop.Denied(...)` musi zakończyć się odmową.
 - Jako app → `ALTER TABLE` musi zostać odmówione.
 - Jako app → próba modyfikacji schematu `dbo` musi zostać odmówiona.
-- Jako deploy → migracja działa po zatwierdzeniu; nie przyznajemy `db_owner` jako „szybkiej naprawy”.
+- Jako deploy → migracja w `shop` działa po zatwierdzeniu, a `CREATE TABLE dbo.ShouldFail` jest odrzucone. Nie przyznajemy `db_owner` jako szybkiej naprawy.
 - Brak `Database.Migrate()` i `MigrateAsync()` w uruchomieniu API.
 
 Jeżeli skrypt migracji nie przechodzi z ograniczonym kontem, ustal **konkretną brakującą operację i uprawnienie**; nie poszerzaj konta na stałe. Bootstrap nie jest procesem odtwarzania produkcyjnego.

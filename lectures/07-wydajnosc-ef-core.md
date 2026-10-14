@@ -31,7 +31,7 @@ Projekcje DTO, AsNoTracking, odpowiednie indeksy, paginacja, operacje zbiorowe; 
 ```csharp
 var result = await db.Orders
     .AsNoTracking()
-    .Where(o => o.TotalAmount > 100)
+    .Where(o => o.Lines.Sum(l => l.UnitPrice * l.Quantity) > 100)
     .Select(o => new { o.Id, Customer = o.Customer.Name })
     .Take(50)
     .ToListAsync();

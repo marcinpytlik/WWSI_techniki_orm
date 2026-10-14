@@ -20,7 +20,7 @@ docker compose ps
 docker compose logs --tail 60 sqlserver
 ```
 
-**Zmień hasło w pliku .env przed uruchomieniem.** Nie używaj hasła przykładowego. Plik .env jest ignorowany przez Git.
+**Zmień hasło w pliku .env przed uruchomieniem.** Nie używaj hasła przykładowego. Plik .env jest ignorowany przez Git. Hasło nie powinno zawierać znaku `"` ani `$`, bo healthcheck przekazuje je do powłoki kontenera.
 
 ## Konfiguracja
 
@@ -31,8 +31,9 @@ docker compose logs --tail 60 sqlserver
 - Użytkownik: `sa`
 - Hasło: własne, zapisane w `.env`
 - Dane: trwały wolumen Dockera `orm_sql_data`
+- Pamięć instancji: `MSSQL_MEMORY_LIMIT_MB=2048`, żeby kontener nie zajął całego RAM laptopa
 
-Healthcheck sprawdza otwarty port TCP wewnątrz kontenera. Status healthy **nie zastępuje** testu logowania i wykonania zapytania SQL.
+Healthcheck loguje się jako `sa` i wykonuje `SELECT 1`. Status healthy oznacza, że silnik przyjmuje zapytania, a nie tylko że port 1433 jest otwarty. Nadal sprawdź build i CU zapytaniem z kolejnej sekcji.
 
 ## Połączenie
 

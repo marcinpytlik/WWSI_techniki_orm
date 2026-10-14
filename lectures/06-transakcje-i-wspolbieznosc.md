@@ -32,7 +32,7 @@ Execution strategies i ostrożność wobec powtórzeń operacji o skutkach ubocz
 modelBuilder.Entity<Product>()
     .Property(p => p.RowVersion)
     .IsRowVersion();
-// w Product: public byte[] RowVersion { get; set; } = [];
+// w Product: public byte[] RowVersion { get; set; } = null!;
 ```
 
 **Komentarz prowadzącego:** Przejdź od znaczenia instrukcji C# do operacji wykonanej przez SQL Server. Rozróżnij opis koncepcyjny od dokładnego T-SQL zależnego od modelu i wersji providera. Przykłady są fragmentami do omówienia; pełny kompilowalny projekt znajdzie się w laboratoriach.
