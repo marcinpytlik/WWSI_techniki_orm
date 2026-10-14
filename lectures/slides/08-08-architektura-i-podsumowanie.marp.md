@@ -159,3 +159,52 @@ Od historii mapowania po plan wykonania SQL.
 NOTATKI PROWADZĄCEGO — slajd 13
 Zamknij cykl i wróć do przykładów pierwszego wykładu.
 -->
+
+---
+
+# Architektura ORM Shop
+
+```text
+API → Application Service ─ EF Core (CRUD)
+                        └ Dapper (raporty)
+                                  ↓
+                           SQL Server 2022
+```
+
+<!-- NOTATKI v2: Hybrydowe podejście nie jest obowiązkiem. -->
+
+---
+
+# Testcontainers
+
+Uruchamiaj testy integracyjne na SQL Server 2022 CU26.
+
+Provider InMemory **nie odtwarza** semantyki SQL Server.
+
+<!-- NOTATKI v2: Sprawdź migracje, FK, rowversion i transakcje. -->
+
+---
+
+# CI/CD i monitoring
+
+Przegląd skryptów migracji, deploy etapowy, logowanie SQL, Query Store.
+
+Nie loguj wrażliwych parametrów.
+
+<!-- NOTATKI v2: Związek pomiędzy wdrożeniem, stabilnością SQL i telemetrią. -->
+
+---
+
+# Wybór technologii
+
+Wymagania → model → zapytania → koszty → testy → wybór EF Core/Dapper/SQL.
+
+<!-- NOTATKI v2: Przypadek raportu: SQL-first. CRUD: pełny ORM. -->
+
+---
+
+# Decyzja ORM Shop
+
+Które rozwiązanie wybierasz? Nazwij **ryzyko**, sposób pomiaru i wpływ na SQL Server.
+
+<!-- NOTATKI: ćwiczenie do dyskusji; pominąć gdy kończy się czas. -->
