@@ -29,3 +29,9 @@ Schematy tekstowe oraz przykładowe fragmenty C# są dydaktyczne. Na wykładzie 
 8. [Architektura i testy](08-08-architektura-i-podsumowanie.marp.md) — 13 slajdów
 
 > Uwagi do przeglądu: slajdy 02–08 są wersją roboczą do wspólnego przeglądu. Liczbę slajdów i tempo trzeba dostosować do dostępnych slotów oraz formalnego wymiaru godzin. Każdy zestaw ma notatki prowadzącego w komentarzach Markdown.
+
+## Rozszerzenie 2.0
+
+Prezentacje 01–08 uzupełniono o przykłady, zagadnienia zaawansowane i slajd decyzyjny związany z ORM Shop. Zobacz [notatki prowadzącego](../notatki-prowadzacego-v2.md) oraz [wspólny model](../orm-shop-case-study.md).
+
+**Uwaga:** stara liczba slajdów przy każdym pliku w powyższym indeksie dotyczy wersji 1.0 i nie odzwierciedla dołączonych slajdów v2.
