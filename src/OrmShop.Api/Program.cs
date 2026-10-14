@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using OrmShop.Api;
+using OrmShop.Api.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
