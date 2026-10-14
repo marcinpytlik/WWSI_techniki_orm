@@ -10,7 +10,7 @@ Student generuje migrację czterech encji, przegląda idempotentny skrypt i wyko
 
 ## Krok 1. Sprawdź model
 
-Otwórz cztery osobne klasy: `src/OrmShop.Api/Entities/Customer.cs`, `Product.cs`, `Order.cs` oraz `OrderLine.cs`. Następnie otwórz `src/OrmShop.Api/Data/ShopDbContext.cs`. Każda encja ma osobny plik i przestrzeń nazw `OrmShop.Api.Entities`; kontekst i fabryka są w `OrmShop.Api.Data`. Wskaż klucze główne, `RowVersion` inicjalizowany jako `null`, `CreatedAt` typu `DateTimeOffset`, schemat `shop` i indeks `Sku`. W starterze model zawiera już także Order i OrderLine — pierwsza migracja utworzy wszystkie cztery tabele. Nie dopisuj tych klas drugi raz.
+Otwórz cztery osobne klasy: `src/OrmShop.Api/Entities/Customer.cs`, `Product.cs`, `Order.cs` oraz `OrderLine.cs`. Następnie otwórz `src/OrmShop.Api/Data/ShopDbContext.cs` oraz cztery osobne mapowania w `Data/Configurations/` (`CustomerConfiguration`, `ProductConfiguration`, `OrderConfiguration`, `OrderLineConfiguration`). Każda encja ma osobny plik i przestrzeń nazw `OrmShop.Api.Entities`; kontekst i fabryka są w `OrmShop.Api.Data`. Wyjaśnij działanie `ApplyConfigurationsFromAssembly(typeof(ShopDbContext).Assembly)`; odszukaj klucze główne, `RowVersion` inicjalizowany jako `null`, `CreatedAt` typu `DateTimeOffset`, schemat `shop` i indeks `Sku`. W starterze model zawiera już także Order i OrderLine — pierwsza migracja utworzy wszystkie cztery tabele. Nie dopisuj tych klas drugi raz.
 
 ## Krok 2. Sprawdź konfigurację historii migracji
 
