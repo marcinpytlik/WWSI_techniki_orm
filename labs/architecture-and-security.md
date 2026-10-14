@@ -24,7 +24,7 @@ flowchart TB
 ## Kolejność i separacja
 
 1. DBA wykonuje `security/01-bootstrap.sql`.
-2. DBA tworzy loginy i role za pomocą `security/02-create-logins.sql` (tryb SQLCMD; hasła inne dla obu kont).
+2. DBA tworzy loginy i role za pomocą `security/02-create-logins.sql` (zwykły T-SQL w VS Code; hasła inne dla obu kont, nigdy nie zapisuj pliku z rzeczywistymi hasłami).
 3. DBA weryfikuje role poleceniami z `security/03-verify-permissions.sql`.
 4. Prowadzący generuje migrację `dotnet ef migrations add ...` oraz skrypt `dotnet ef migrations script --idempotent -o ...`.
 5. Skrypt jest sprawdzany pod kątem DROP, ALTER, blokad, utraty danych, transakcyjności i odtwarzania.
