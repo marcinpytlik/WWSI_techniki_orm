@@ -31,7 +31,15 @@ docker info
 
 Dwa ostatnie polecenia i WSL dotyczą wariantu kontenerowego. Docker Desktop powinien działać w trybie kontenerów Linux.
 
-## 2. SQL Server 2022 — Docker
+## 2. SQL Server 2022 CU26 — Docker
+
+**Wersja obowiązująca dla kursu:** SQL Server 2022 Developer CU26 (KB5093420), build `16.0.4265.3`, Ubuntu 22.04, tag `2022-CU26-ubuntu-22.04`. Nie używaj `2022-latest`, ponieważ jego zawartość może się zmieniać.
+
+Przed uruchomieniem kontenera pobierz dokładnie określony obraz:
+
+~~~powershell
+docker pull mcr.microsoft.com/mssql/server:2022-CU26-ubuntu-22.04
+~~~
 
 Użyj lokalnego kontenera do ćwiczeń (nie do produkcji). Hasło podaj interaktywnie i nie zapisuj go w repozytorium.
 
@@ -43,7 +51,7 @@ docker run -d --name orm-sql2022 `
   -e "MSSQL_SA_PASSWORD=$SqlPassword" `
   -p 127.0.0.1:14333:1433 `
   -v orm_sql_data:/var/opt/mssql `
-  mcr.microsoft.com/mssql/server:2022-latest
+  mcr.microsoft.com/mssql/server:2022-CU26-ubuntu-22.04
 docker ps
 docker logs --tail 50 orm-sql2022
 ~~~
@@ -56,7 +64,14 @@ Sprawdź połączenie:
 
 ~~~sql
 SELECT @@VERSION AS SqlServerVersion;
+SELECT SERVERPROPERTY('ProductVersion') AS ProductVersion,
+       SERVERPROPERTY('ProductUpdateLevel') AS ProductUpdateLevel,
+       SERVERPROPERTY('Edition') AS Edition;
 SELECT DB_NAME() AS CurrentDatabase;
+
+-- Oczekiwany build: 16.0.4265.3, CU26
+-- Zgodność bazy ćwiczeniowej (po jej utworzeniu):
+SELECT name, compatibility_level FROM sys.databases;
 ~~~
 
 Uruchamianie i zatrzymywanie:
