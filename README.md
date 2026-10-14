@@ -55,3 +55,7 @@ Repozytorium w fazie przygotowania. Harmonogram merytoryczny ma charakter robocz
 ## Przygotowanie przed pierwszym zjazdem
 
 Przed 25.10.2026 wykonaj instrukcję: **[Przygotowanie środowiska](docs/przygotowanie-srodowiska.md)**.
+
+## SQL Server do laboratoriów
+
+Uruchomienie ustalonego środowiska SQL Server 2022 CU26: [Docker Compose](docs/docker-sql-server.md). Pliki: `docker-compose.yml` i `.env.example`.
