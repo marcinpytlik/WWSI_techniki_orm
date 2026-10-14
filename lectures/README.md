@@ -36,3 +36,12 @@ Przydział przedmiotu: 18 h wykładów i 27 h laboratoriów. W znanym planie sie
 ## Komplet slajdów wykładowych
 
 Wszystkie prezentacje wykładów 01–08 znajdują się w [katalogu slides](slides/README.md). Łącznie 108 slajdów, w tym notatki prowadzącego. Wersja robocza do przeglądu merytorycznego.
+
+## Wersja 2.0 — rozszerzenie dydaktyczne
+
+- [Wspólny przykład ORM Shop z diagramami](orm-shop-case-study.md)
+- [Notatki prowadzącego, pytania i studia przypadków](notatki-prowadzacego-v2.md)
+- [Plan uzupełnień i zasady doboru materiałów](wersja-2-plan-dydaktyczny.md)
+- [Zaktualizowane prezentacje](slides/README.md)
+
+Slajdy rozszerzające są opcjonalne; prezentacje nie stanowią samodzielnie uruchamialnego laboratorium.
