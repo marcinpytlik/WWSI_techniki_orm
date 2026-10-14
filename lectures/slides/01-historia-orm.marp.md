@@ -295,3 +295,44 @@ Nie wydawaj absolutnych sądów o szybkości. Zależność od projektu i profilu
 NOTATKI PROWADZĄCEGO — 1 min
 Zamknij pytaniem otwierającym. Na następnym zjeździe przejdziemy do encji, DbContext i migracji.
 -->
+
+---
+
+# Oś czasu — skąd ORM?
+
+```text
+1970: model relacyjny → SQL
+1980–90: ODBC/JDBC i ręczne mapowanie
+1990–2000: TopLink / Hibernate
+2000+: NHibernate, EF, Rails Active Record
+2010+: Dapper, EF Core, Prisma
+```
+
+**Każda z tych dróg nadal ma zastosowanie.**
+
+<!-- NOTATKI v2: Oś celowo przybliżona. Historia nie oznacza zastępowania SQL przez ORM. -->
+
+---
+
+# Active Record vs Data Mapper
+
+```text
+Active Record:  Model + Save()/Load()
+Data Mapper:   Model ←→ Mapper ←→ SQL
+                         ↑
+                    DbContext EF Core
+```
+
+**Pytanie:** gdzie umieszczamy logikę utrwalania?
+
+<!-- NOTATKI v2: Zaznacz, że DbContext nie jest dosłownie wyłącznie Data Mapper. -->
+
+---
+
+# ORM Shop — decyzja po wykładzie
+
+Zapisz **jeden wybór techniczny**, jedno ryzyko oraz sposób sprawdzenia SQL Server.
+
+**Case study:** [lectures/orm-shop-case-study.md](../orm-shop-case-study.md)
+
+<!-- NOTATKI: Rozwiązanie zapisz w notatkach studenta. Ten slajd można pominąć przy braku czasu. -->
