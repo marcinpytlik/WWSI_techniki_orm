@@ -178,3 +178,35 @@ Encje i DbContext są modelem; migracje zmieniają rzeczywistą bazę.
 NOTATKI PROWADZĄCEGO — slajd 13
 Zapowiedź relacji i kluczy obcych.
 -->
+
+---
+
+# ORM Shop — zaawansowane mapowanie
+
+Owned/complex types, Value Converters, Shadow Properties. **Dziedziczenie:** TPH, TPT, TPC. Każdy wariant wpływa na DDL i odczyty.
+
+<!-- NOTATKI v2: Pokaż kiedy własny typ Money można mapować jako wartość; nie utożsamiaj owned z complex. -->
+
+---
+
+# Migracje bez przestoju
+
+**Expand → Migrate Data → Contract**. Wprowadź kolumnę opcjonalną, uzupełnij dane, przełącz aplikację, dopiero potem wymuszaj NOT NULL.
+
+<!-- NOTATKI v2: Nie wykonuj niezweryfikowanego DROP na produkcji. -->
+
+---
+
+# Przypadek ORM Shop
+
+SKU musi być unikalne, Price ma decimal(18,2), Name ma limit długości. Co waliduje aplikacja, a co baza?
+
+<!-- NOTATKI v2: Ćwiczenie: przewidź odpowiednie UNIQUE, NULL/NOT NULL i CHECK. -->
+
+---
+
+# Decyzja ORM Shop
+
+Które rozwiązanie wybierasz? Nazwij **ryzyko**, sposób pomiaru i wpływ na SQL Server.
+
+<!-- NOTATKI: ćwiczenie do dyskusji; pominąć gdy kończy się czas. -->
