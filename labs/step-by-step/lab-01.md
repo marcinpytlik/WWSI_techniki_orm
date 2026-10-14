@@ -52,7 +52,7 @@ SELECT name FROM OrmShop.sys.schemas WHERE name=N'shop';
 
 ## Krok 5. Załóż osobne konta
 
-W SSMS włącz **Query → SQLCMD Mode**, otwórz [02-create-logins.sql](../security/02-create-logins.sql), zastąp dwa hasła różnymi silnymi losowymi hasłami i wykonaj skrypt **na izolowanym lokalnym SQL Server**. Hasło nie może zawierać apostrofu (`'`), bo trafia do literału T-SQL. Nie zapisuj pliku z hasłami. Skrypt można uruchomić ponownie: istniejący login dostanie nowe hasło, a członkostwo w roli nie spowoduje błędu. Dla wieloosobowej instancji uczelni konta i sekrety nadaje administrator, nie student.
+W VS Code otwórz [02-create-logins.sql](../security/02-create-logins.sql). Skrypt działa jako zwykły T-SQL — **bez SQLCMD Mode**. W dwóch zmiennych na początku wpisz różne, silne hasła (min. 15 znaków), wykonaj plik na połączeniu administracyjnym `sa`. Nie zapisuj pliku z hasłami i nie umieszczaj ich w Git. Jeżeli wykonasz ponownie, hasła istniejących loginów zostaną zmienione. Dla wieloosobowej instancji uczelni konta i sekrety nadaje administrator, nie student.
 
 ## Krok 6. Zweryfikuj granice
 
