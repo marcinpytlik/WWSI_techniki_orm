@@ -14,7 +14,7 @@ W diagramie zaznacz: Customer 1:N Order; Order 1:N OrderLine; Product 1:N OrderL
 
 ## Krok 2. Znajdź mapowanie
 
-W `ShopDbContext.cs` wskaż `HasOne/WithMany/HasForeignKey`, `OnDelete(DeleteBehavior.NoAction)` dla Customer i Product oraz `Cascade` dla OrderLine po Order. Wyjaśnij, dlaczego historii nie kasujemy automatycznie razem z Customer.
+W `src/OrmShop.Api/Data/ShopDbContext.cs` wskaż `HasOne/WithMany/HasForeignKey`, `OnDelete(DeleteBehavior.NoAction)` dla Customer i Product oraz `Cascade` dla OrderLine po Order. Wyjaśnij, dlaczego historii nie kasujemy automatycznie razem z Customer.
 
 ## Krok 3. Weryfikacja FK w SQL
 
