@@ -30,12 +30,17 @@ src/OrmShop.Api/
 │   └── OrderLine.cs
 ├── Data/
 │   ├── ShopDbContext.cs
-│   └── ShopDbContextFactory.cs
+│   ├── ShopDbContextFactory.cs
+│   └── Configurations/
+│       ├── CustomerConfiguration.cs
+│       ├── ProductConfiguration.cs
+│       ├── OrderConfiguration.cs
+│       └── OrderLineConfiguration.cs
 ├── Program.cs
 └── OrmShop.Api.csproj
 ```
 
-Każda encja ma własny plik i przestrzeń nazw `OrmShop.Api.Entities`. Klasy odpowiedzialne za konfigurację dostępu do danych należą do `OrmShop.Api.Data`. Nie twórz ponownie `Models.cs`; ten plik usunięto podczas porządkowania struktury.
+Każda encja ma własny plik i przestrzeń nazw `OrmShop.Api.Entities`. Klasy odpowiedzialne za konfigurację dostępu do danych należą do `OrmShop.Api.Data`. Każda encja ma własną klasę `IEntityTypeConfiguration<T>` w `Data/Configurations`, a `ShopDbContext.OnModelCreating` ładuje je przez `ApplyConfigurationsFromAssembly`. Ten refaktoring nie zmienia istniejącej migracji `InitialShopSchema`. Nie twórz ponownie `Models.cs`; ten plik usunięto podczas porządkowania struktury.
 
 ## Model
 
