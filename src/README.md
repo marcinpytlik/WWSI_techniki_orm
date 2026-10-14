@@ -9,7 +9,7 @@ W katalogu głównym repo:
 ```powershell
 dotnet build OrmShop.sln
 cd src/OrmShop.Api
-dotnet user-secrets set "ConnectionStrings:ShopDb" "Server=localhost,14333;Database=OrmShop;User ID=orm_shop_app;Password=<WŁASNE_HASŁO_APP>;Encrypt=True;TrustServerCertificate=True"
+dotnet user-secrets set "ConnectionStrings:ShopDb" "Server=127.0.0.1,14333;Database=OrmShop;User ID=orm_shop_app;Password=<WŁASNE_HASŁO_APP>;Encrypt=True;TrustServerCertificate=True"
 dotnet run
 ```
 
@@ -18,6 +18,24 @@ dotnet run
 Podmień `<WŁASNE_HASŁO_APP>` na lokalne hasło. **Nie zapisuj rzeczywistego connection stringu w Git.** Uwaga: historyczne polecenia shell mogą ujawniać sekrety; rozważ interaktywne wprowadzenie danych i czyszczenie historii.
 
 Po wykonaniu migracji `GET /products` zwróci listę (na początku pustą) razem z `RowVersion` zakodowanym jako Base64. `GET /health` odpowiada bez połączenia z bazą.
+
+## Organizacja kodu
+
+```text
+src/OrmShop.Api/
+├── Entities/
+│   ├── Customer.cs
+│   ├── Product.cs
+│   ├── Order.cs
+│   └── OrderLine.cs
+├── Data/
+│   ├── ShopDbContext.cs
+│   └── ShopDbContextFactory.cs
+├── Program.cs
+└── OrmShop.Api.csproj
+```
+
+Każda encja ma własny plik i przestrzeń nazw `OrmShop.Api.Entities`. Klasy odpowiedzialne za konfigurację dostępu do danych należą do `OrmShop.Api.Data`. Nie twórz ponownie `Models.cs`; ten plik usunięto podczas porządkowania struktury.
 
 ## Model
 
