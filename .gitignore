@@ -17,3 +17,8 @@ appsettings.Development.json
 # OS
 .DS_Store
 Thumbs.db
+
+# Migration scripts generated locally for review; commit only approved, sanitized artifacts
+artifacts/
+**/bin/
+**/obj/
