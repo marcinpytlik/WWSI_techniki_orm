@@ -160,3 +160,55 @@ Nie rób micro-optimization przed znalezieniem bottlenecku.
 NOTATKI PROWADZĄCEGO — slajd 13
 Zapowiedz testowanie i architekturę.
 -->
+
+---
+
+# N+1
+
+```text
+1 SELECT Customers
+100 SELECT Orders WHERE CustomerId=@id
+= 101 zapytań
+```
+
+**Sprawdź logi, zanim postawisz diagnozę.**
+
+<!-- NOTATKI v2: To przykład lazy/explicit loading, nie gwarantowane zachowanie EF Core. -->
+
+---
+
+# Cartesian explosion
+
+Jednemu klientowi odpowiada 10 zamówień i 10 recenzji.
+
+JOIN dwóch kolekcji może zwrócić 100 wierszy dla tego klienta.
+
+<!-- NOTATKI v2: Porównaj single i split queries. -->
+
+---
+
+# Query Store i parametry
+
+Pomiar: logical reads, CPU, elapsed, liczba zapytań, rozmiar odpowiedzi.
+
+Parameter sniffing może prowadzić do różnic planu.
+
+<!-- NOTATKI v2: Pokaż Actual Plan i Query Store. -->
+
+---
+
+# Eksperyment
+
+Include pełnego grafu **kontra** projekcja DTO.
+
+Porównuj te same dane i sprawdź SQL, plan oraz IO.
+
+<!-- NOTATKI v2: Nie wyciągaj wniosku z pojedynczego pomiaru. -->
+
+---
+
+# Decyzja ORM Shop
+
+Które rozwiązanie wybierasz? Nazwij **ryzyko**, sposób pomiaru i wpływ na SQL Server.
+
+<!-- NOTATKI: ćwiczenie do dyskusji; pominąć gdy kończy się czas. -->
