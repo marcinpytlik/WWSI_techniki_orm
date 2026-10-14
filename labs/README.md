@@ -23,3 +23,5 @@ Materiały robocze: szczegółowe instrukcje będą w osobnych plikach `lab-01.m
 ## Przed Lab 01
 
 Zainstaluj narzędzia i wykonaj testy według [instrukcji przygotowania środowiska](../docs/przygotowanie-srodowiska.md).
+
+Instancję SQL Server 2022 CU26 uruchamiamy według [Docker Compose](../docs/docker-sql-server.md).
